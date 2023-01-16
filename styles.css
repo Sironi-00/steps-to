@@ -20,5 +20,9 @@ main {
 #screen {
     background-color: #369;
     width: 1fr;
-    height: max(300px, 90%);
+    min-height: 300px;
 }
+#entry {
+    background-color: #246;
+    padding: 4px;
+} 

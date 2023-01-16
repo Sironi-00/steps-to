@@ -8,8 +8,25 @@ console.log("Hi")
 // ## [1,2,3,5]
 // K:V pair
 
-function Todo_Thing(action, completed, step_no) {
+// Arr for containing all todos
+let Todos_arr = []
+let LOCAL_TODO_ARR;
+
+let Local_save = () => {
+    localStorage.setItem(LOCAL_TODO_ARR, JSON.stringify(Todos_arr));
+}
+
+let Local_load = () => {
+    let lo_arr = JSON.parse(localStorage.getItem(LOCAL_TODO_ARR))
+    let asd = lo_arr ? lo_arr: []
+    Todos_arr = asd;
+    render();
+}
+
+// Todo Obj Constructor
+function Todo_Thing(id, action, completed, step_no) {
     // Constuructor for todo obj
+    this.id = id,
     this.action = action,
     this.completed = completed,
     this.step_no = step_no,
@@ -31,21 +48,64 @@ function Todo_Thing(action, completed, step_no) {
     }
 }
 
-let show = ({action, completed, step_no}) => {
-    console.log(action)
-    console.log(completed)
-    console.log(step_no)
+let show = ({id, action, completed, step_no}) => {
+    let to_node = document.createElement("div")
+    to_node.setAttribute("class", "todo")
+    to_node.innerHTML = `
+        <h4 class="todo-step">Step:  ${step_no}</h3>
+        <p class="todo-action">Action: ${action}</P>
+        <label for="todo-Completed">Completed:</label>
+        <input type="checkbox" name="todo-competed" id="todo-completed${id}">
+        <button id="${id}">Remove</button>
+    `;
+    let scrn = document.getElementById("screen");
+    scrn.append(to_node);
+
+    // Ev
+    document.getElementById(id).addEventListener("click", ()=>rm_todo(id))
+    document.getElementById(`todo-completed${id}`).checked = completed;
+    document.getElementById(`todo-completed${id}`).addEventListener("change", ()=>toggle_completed(id))
 }
-//show(asd)
+let rm_todo = (e_id) => {
+    //rm todo 
+    let temp_arr = []
+    Todos_arr.forEach(todo=>{
+        if (todo.id != e_id) temp_arr.push(todo)
+    })
+    Todos_arr = temp_arr;
+    render();
+}
+let toggle_completed = (e_id) => {
+    //complete todo 
+    Todos_arr.forEach(todo=>{
+        if (todo.id == e_id) todo.update("completed",!todo.completed)
+    })
+    render()
+}
+let render = () => {
+    document.getElementById("screen").innerHTML = ""
+    Local_save();
+    Todos_arr.forEach(todo=>show(todo))
+}
 
-//////////////////////////////////////////////////////
-// Arr for containing all todos
-let Todos_arr = []
 
-let ta = new Todo_Thing("Born", true, 0)
-let tb = new Todo_Thing("Live", true, 1)
-let tc = new Todo_Thing("Die", false, 2)
+// Entry
+let entry_add = document.getElementById("entry-add")
+let todo_entry = () => {
+    let entry_action = document.getElementById("entry-action").value
+    let entry_step = document.getElementById("entry-step").value
+    let entry_completed = document.getElementById("entry-completed").checked
+    let entry_id = Todos_arr.length+1
+    
+    let new_todo = new Todo_Thing(entry_id, entry_action, entry_completed, entry_step)
+    Todos_arr.push(new_todo)
 
-Todos_arr.push(ta,tb,tc)
+    render()
+    Local_save()
 
-Todos_arr.forEach(todo=>show(todo))
+    //add clear fields on sub
+}
+entry_add.addEventListener("click", ()=>todo_entry())
+
+Local_load()
+localStorage.clear();
