@@ -58,12 +58,12 @@ let show = ({id, action, completed, step_no}) => {
 
     to_node.innerHTML = `
         <h4 class="todo-step">
-        Step: <select name="sel" id="step-no-opt${id}">${step_options}</select>
+        Step: <select class="todo-select" name="step-select" id="step-no-opt${id}">${step_options}</select>
         </h3>
         <p class="todo-action">Action: ${action}</P>
         <label for="todo-Completed">Completed:</label>
-        <input type="checkbox" name="todo-competed" id="todo-completed${id}">
-        <button id="${id}">Remove</button>
+        <input class="todo-complete" type="checkbox" name="todo-competed" id="todo-completed${id}">
+        <button class="todo-remove" id="${id}">Remove</button>
     `;
     let scrn = document.getElementById("screen");
     scrn.append(to_node);
