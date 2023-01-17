@@ -50,17 +50,16 @@ function Todo_Thing(id, action, completed, step_no) {
 let show = ({id, action, completed, step_no}) => {
     let to_node = document.createElement("div")
     to_node.setAttribute("class", "todo")
-    
+    // Creates Step selector options
     let step_options = ""
     for (let i = 1; i <= Todos_arr.length; i++) {
         step_options += `<option value="${i}">${i}</option>`
     }
 
     to_node.innerHTML = `
-        <h4 class="todo-step">Step:  ${step_no}</h3>
-        <select name="sel" id="step-no-opt${id}">
-                ${step_options}
-        </select>
+        <h4 class="todo-step">
+        Step: <select name="sel" id="step-no-opt${id}">${step_options}</select>
+        </h3>
         <p class="todo-action">Action: ${action}</P>
         <label for="todo-Completed">Completed:</label>
         <input type="checkbox" name="todo-competed" id="todo-completed${id}">
