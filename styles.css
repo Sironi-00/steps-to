@@ -1,3 +1,12 @@
+:root {
+    --color1: #FFF;
+    --color2: #000;
+    --color3: #265879;
+
+    --color1: #265879;
+    --color2: #FFF;
+    --color3: #000;
+}
 * {
     margin: 0;
     padding: 0;
@@ -11,8 +20,8 @@ body {
     overflow: hidden;
 }
 main {
-    background-color: #265879;
-    color: #FFF;
+    background-color: var(--color1);
+    color: var(--color2);
     width: 1fr;
     overflow: auto;
     padding: 20px;
@@ -24,46 +33,52 @@ main {
     }
 }
 header {
+    top: 0
+}
+header, #entry {
     text-align: center;
     position: sticky;
-    top: 0;
+    background-color: var(--color1);
 }
+#entry {
+    bottom: 0;
+    padding: 4px 12px;
+    box-shadow: inset 0 0 12px var(--color3);
+    border: 4px solid var(--color3);
+} 
+
 #screen {
     width: 1fr;
     min-height: 6px;
     padding: 6px;
 }
-#entry {
-    position: sticky;
-    bottom: 0;
-    box-shadow: inset 0 0 12px #000;
-    padding: 4px 12px;
-    border: 4px solid #000;
-} 
-
 .todo {
     margin: 0.5rem;
     padding: 0.35rem;
-    border-left: 4px solid #000;
-    border-bottom: 4px solid #000;
-    box-shadow: 0 0 12px #000;
+    border-left: 4px solid var(--color3);
+    border-bottom: 4px solid var(--color3);
+    box-shadow: 0 0 12px var(--color3);
 
     display: flex;
     justify-content: space-between;
 }
 .todo:hover {
-    border: 2px solid #FFF;
+    border: 2px solid var(--color2);
 }
-.todo-step {}
 .todo-select {
     background-color: transparent;
-    
     border: none;
-    box-shadow: inset 0 0 4px #000;
+    box-shadow: inset 0 0 4px var(--color3);
     padding: 4px;
 }
-.todo-action span {
-    border-bottom: 2px solid #FFF;
+.todo-step , .todo-action, .todo-complete {
+    margin: 0.125rem 0.5rem;
+    padding: 0.25rem;
 }
-.todo-complete
-.todo-remove {}
+.todo-action span {
+    border-bottom: 2px solid var(--color2);
+}
+.btns {
+    margin: 0.125rem 0.5rem;
+    padding: 0.125rem 0.25rem;
+}

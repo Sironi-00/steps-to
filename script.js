@@ -61,11 +61,11 @@ let show = ({id, action, completed, step_no}) => {
         STEP: <select class="todo-select" name="step-select" id="step-no-opt${id}">${step_options}</select>
         </h3>
         <p class="todo-action">Action: <span>${action}</span></P>
-        <label for="todo-Completed">
+        <label class="todo-complete" for="todo-Completed">
             Completed:
-            <input class="todo-complete" type="checkbox" name="todo-competed" id="todo-completed${id}">
+            <input class="todo-complete-check" type="checkbox" name="todo-competed" id="todo-completed${id}">
         </label>
-        <button class="todo-remove" id="${id}">Remove</button>
+        <button class="btns todo-remove" id="${id}">Remove</button>
     `;
     let scrn = document.getElementById("screen");
     scrn.append(to_node);
