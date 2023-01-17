@@ -52,17 +52,19 @@ let show = ({id, action, completed, step_no}) => {
     to_node.setAttribute("class", "todo")
     // Creates Step selector options
     let step_options = ""
-    for (let i = 1; i <= Todos_arr.length; i++) {
+    for (let i = 0; i <= Todos_arr.length; i++) {
         step_options += `<option value="${i}">${i}</option>`
     }
 
     to_node.innerHTML = `
         <h4 class="todo-step">
-        Step: <select class="todo-select" name="step-select" id="step-no-opt${id}">${step_options}</select>
+        STEP: <select class="todo-select" name="step-select" id="step-no-opt${id}">${step_options}</select>
         </h3>
-        <p class="todo-action">Action: ${action}</P>
-        <label for="todo-Completed">Completed:</label>
-        <input class="todo-complete" type="checkbox" name="todo-competed" id="todo-completed${id}">
+        <p class="todo-action">Action: <span>${action}</span></P>
+        <label for="todo-Completed">
+            Completed:
+            <input class="todo-complete" type="checkbox" name="todo-competed" id="todo-completed${id}">
+        </label>
         <button class="todo-remove" id="${id}">Remove</button>
     `;
     let scrn = document.getElementById("screen");
@@ -75,8 +77,9 @@ let show = ({id, action, completed, step_no}) => {
     document.getElementById(`step-no-opt${id}`).value = step_no
     document.getElementById(`step-no-opt${id}`).addEventListener("change", ()=> update_step(id, document.getElementById(`step-no-opt${id}`).value))
 }
+// in Remove
 let rm_todo = (e_id) => {
-    //rm todo 
+    //rm todo by id 
     let temp_arr = []
     Todos_arr.forEach(todo=>{
         if (todo.id != e_id) temp_arr.push(todo)
@@ -101,6 +104,7 @@ let update_step = (e_id, step_v) => {
 }
 
 let render = () => {
+    // clears and shows items in screen
     document.getElementById("screen").innerHTML = ""
     let sort_fn = (a, b) => {
         // sort todo objs by step no
@@ -130,12 +134,35 @@ let todo_entry = () => {
 }
 entry_add.addEventListener("click", ()=>todo_entry())
 
-Local_load()
-let entry_clear = document.getElementById("entry-clear")
-let local_clear = () => {
+
+//////////////////////////////////////////////////////////////////////
+// Remove todos
+let rm_all = document.getElementById("rm-all")
+let remove_all = () => {
+    // rm all todos and clear local storage
     console.log("S",Todos_arr)
     localStorage.clear()
     Todos_arr = []
     render()
 }
-entry_clear.addEventListener("click", ()=> local_clear())
+rm_all.addEventListener("click", ()=> remove_all())
+
+let rm_completed = document.getElementById("rm-completed")
+let rm_not_completed = document.getElementById("rm-not-completed")
+let remove_completed = (not=false) => {
+    //rm ?completed todos
+    let temp_arr = []
+    Todos_arr.forEach(todo=>{
+        // rm not completed
+        if (todo.completed & not) temp_arr.push(todo)
+        // rm completed
+        if (!todo.completed & !not) temp_arr.push(todo)
+    })
+    Todos_arr = temp_arr;
+    render();
+}
+rm_completed.addEventListener("click", ()=> remove_completed())
+rm_not_completed.addEventListener("click", ()=> remove_completed(true))
+
+
+Local_load()
