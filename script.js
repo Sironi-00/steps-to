@@ -18,8 +18,7 @@ let Local_save = () => {
 
 let Local_load = () => {
     let lo_arr = JSON.parse(localStorage.getItem(LOCAL_TODO_ARR))
-    let asd = lo_arr ? lo_arr: []
-    Todos_arr = asd;
+    Todos_arr = lo_arr ? lo_arr: []
     render();
 }
 
@@ -51,8 +50,17 @@ function Todo_Thing(id, action, completed, step_no) {
 let show = ({id, action, completed, step_no}) => {
     let to_node = document.createElement("div")
     to_node.setAttribute("class", "todo")
+    
+    let step_options = ""
+    for (let i = 1; i <= Todos_arr.length; i++) {
+        step_options += `<option value="${i}">${i}</option>`
+    }
+
     to_node.innerHTML = `
         <h4 class="todo-step">Step:  ${step_no}</h3>
+        <select name="sel" id="step-no-opt${id}">
+                ${step_options}
+        </select>
         <p class="todo-action">Action: ${action}</P>
         <label for="todo-Completed">Completed:</label>
         <input type="checkbox" name="todo-competed" id="todo-completed${id}">
@@ -65,6 +73,8 @@ let show = ({id, action, completed, step_no}) => {
     document.getElementById(id).addEventListener("click", ()=>rm_todo(id))
     document.getElementById(`todo-completed${id}`).checked = completed;
     document.getElementById(`todo-completed${id}`).addEventListener("change", ()=>toggle_completed(id))
+    document.getElementById(`step-no-opt${id}`).value = step_no
+    document.getElementById(`step-no-opt${id}`).addEventListener("change", ()=> update_step(id, document.getElementById(`step-no-opt${id}`).value))
 }
 let rm_todo = (e_id) => {
     //rm todo 
@@ -78,13 +88,29 @@ let rm_todo = (e_id) => {
 let toggle_completed = (e_id) => {
     //complete todo 
     Todos_arr.forEach(todo=>{
-        if (todo.id == e_id) todo.update("completed",!todo.completed)
+        if (todo.id == e_id) todo.update("completed", !todo.completed)
     })
     render()
 }
+
+let update_step = (e_id, step_v) => {
+    //complete todo 
+    Todos_arr.forEach(todo=>{
+        if (todo.id == e_id) todo.update("step_no", step_v)
+    })
+    render()
+}
+
 let render = () => {
     document.getElementById("screen").innerHTML = ""
-    Local_save();
+    let sort_fn = (a, b) => {
+        // sort todo objs by step no
+        if (a.step_no < b.step_no) return -1
+        if (a.step_no > b.step_no) return 1
+        return 0
+    }
+    Todos_arr.sort(sort_fn)
+    Local_save()
     Todos_arr.forEach(todo=>show(todo))
 }
 
@@ -101,11 +127,16 @@ let todo_entry = () => {
     Todos_arr.push(new_todo)
 
     render()
-    Local_save()
-
     //add clear fields on sub
 }
 entry_add.addEventListener("click", ()=>todo_entry())
 
 Local_load()
-localStorage.clear();
+let entry_clear = document.getElementById("entry-clear")
+let local_clear = () => {
+    console.log("S",Todos_arr)
+    localStorage.clear()
+    Todos_arr = []
+    render()
+}
+entry_clear.addEventListener("click", ()=> local_clear())
