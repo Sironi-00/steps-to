@@ -30,12 +30,18 @@ let form_todo = () => {
     </div>
     <div id="entry">
     <h3>Add Todo</h3>
-    <label for="action">Activity: </label>
-    <input type="text" name="action" id="entry-action" placeholder="Learn React" required="true">
-    <label for="step">No.</label>
-    <input type="number" name="step" id="entry-step" placeholder="1">
-    <label for="competed">Completed:</label>
-    <input type="checkbox" name="competed" id="entry-completed">
+    <label for="action">
+        Activity: 
+        <input type="text" name="action" id="entry-action" placeholder="Learn React" required="true">
+    </label>
+    <label for="step">
+        No.
+        <input type="number" name="step" id="entry-step" placeholder="1">
+    </label>
+    <label for="competed">
+        Completed:
+        <input type="checkbox" name="competed" id="entry-completed">
+    </label>
     <button class="btns" type="submit" id="entry-add">Add</button>
     <div class="rm-block">
     <button class="btns" id="rm-completed">Delete Completed</button>
@@ -202,7 +208,7 @@ let root_sc = () => {
         <p class="root-text">Each root Todo can hold a list (branch) of todo's which have move functions</p>
         <div id="home-screen">
         </div>
-        <div class="create-root">
+        <div id="create-root">
         <h3>Create Root Todo</h3>
         <label for="name">Name: </label>
         <input id="root-name" type="text" name="name" id="" placeholder="Shopping List">

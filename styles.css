@@ -35,6 +35,7 @@ main {
 @media screen and (max-width: 480px) {
     body {
         padding: 1px;
+        height: 95vh;
     }
     main {
         padding: 0px;
@@ -44,7 +45,7 @@ header {
     text-shadow: 2px 2px 6px var(--color3);
     top: 0
 }
-header, #entry, .create-root {
+header, #entry, #create-root {
     text-align: center;
     position: sticky;
     z-index: 1;
@@ -54,16 +55,27 @@ header, #entry, .create-root {
 #entry {
     bottom: 24px;
     padding: 8px 16px;
-    box-shadow: inset 0 0 12px var(--color3);
-    border: 4px solid var(--color3);
+    
     max-width: max-content;
     margin-inline: auto;
 }
-#entry *, .create-root * {
+#entry, #create-root {
+    box-shadow: inset 0 0 12px var(--color3);
+    border: 4px solid var(--color3);
+    height: 42px;
+    overflow: hidden;
+}
+#entry:hover, #create-root:hover {
+    height: max-content;
+}
+#entry *, #create-root * {
     margin-bottom: 0.35rem;
 }
 #entry input {
     margin-right: 0.75rem;
+}
+#entry label {
+    display: inline-block;
 }
 #entry-add, #make-root {
     display: block;
