@@ -25,17 +25,15 @@ let Local_load = (foreign_key) => {
 
 let form_todo = () => {
     document.getElementById("frame").innerHTML = `
-    <header>
     <h2>Todo: ${LOCAL_TODO_ARR}</h2>
-    </header>
     <div id="screen">
     </div>
     <div id="entry">
     <h3>Add Todo</h3>
     <label for="action">Activity: </label>
-    <input type="text" name="action" id="entry-action">
+    <input type="text" name="action" id="entry-action" placeholder="Learn React" required="true">
     <label for="step">No.</label>
-    <input type="number" name="step" id="entry-step">
+    <input type="number" name="step" id="entry-step" placeholder="1">
     <label for="competed">Completed:</label>
     <input type="checkbox" name="competed" id="entry-completed">
     <button class="btns" type="submit" id="entry-add">Add</button>
@@ -132,7 +130,6 @@ let render = () => {
     Todos_arr.forEach(todo=>show(todo))
 }
 
-
 // Entry
 let entry_add = document.getElementById("entry-add")
 let todo_entry = () => {
@@ -180,8 +177,6 @@ rm_not_completed.addEventListener("click", ()=> remove_completed(true))
 render();
 }
 
-//Local_load()
-
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -197,22 +192,19 @@ let root_Local_save = () => {
 let root_Local_load = () => {
     let root_arr = JSON.parse(localStorage.getItem(LOCAL_ROOT_ARR))
     root_todos = root_arr ? root_arr: []
-
 }
 
 console.log("in main")
 let root_sc = () => {
     root_Local_load()
     document.getElementById("frame").innerHTML = `
-        <header>
-        <p>Each root Todo can hold a list (branch) of todo's which have move functions</p>
-        </header>
+        <p class="root-text">Each root Todo can hold a list (branch) of todo's which have move functions</p>
         <div id="home-screen">
         </div>
         <div class="create-root">
         <h3>Create Root Todo</h3>
         <label for="name">Name: </label>
-        <input id="root-name" type="text" name="name" id="">
+        <input id="root-name" type="text" name="name" id="" placeholder="Shopping List">
         <button class="btns" id="make-root" type="submit">Create</button>
         </div>
     `
@@ -249,7 +241,7 @@ let root_sc = () => {
     
     let make_root = () => {
         let root_name = document.getElementById("root-name").value
-        if (root_name.length < 1) return alert("Lenght of name cannot be les than 1")
+        if (root_name.length < 1) return alert("Length of name cannot be les than 1")
         if (root_todos.includes(root_name)) return alert("Name already exists: Enter a different name")
         root_todos.push(root_name)
         root_render()
