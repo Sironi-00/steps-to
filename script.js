@@ -109,17 +109,23 @@ let rm_todo = (e_id) => {
 }
 let toggle_completed = (e_id) => {
     //complete todo 
+    let temp_arr = []
     Todos_arr.forEach(todo=>{
-        if (todo.id == e_id) todo.update("completed", !todo.completed)
+        if (todo.id == e_id) todo.completed = !todo.completed
+        temp_arr.push(todo)
     })
+    Todos_arr = temp_arr;
     render()
 }
 
 let update_step = (e_id, step_v) => {
     //complete todo 
+    let temp_arr = []
     Todos_arr.forEach(todo=>{
-        if (todo.id == e_id) todo.update("step_no", step_v)
+        if (todo.id == e_id) todo.step_no = step_v
+        temp_arr.push(todo)
     })
+    Todos_arr = temp_arr;
     render()
 }
 
