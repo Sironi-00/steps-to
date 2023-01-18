@@ -48,23 +48,7 @@ function Todo_Thing(id, action, completed, step_no) {
     this.id = id,
     this.action = action,
     this.completed = completed,
-    this.step_no = step_no,
-    this.update = (key, new_value) => {
-        // Change value of obj based on key passed
-        switch (key) {
-            case "action":
-                this.action = new_value
-                break;
-            case "completed":
-                this.completed = new_value
-                break;
-            case "step_no":
-                this.step_no = new_value
-                break;
-            default:
-                break;
-        }
-    }
+    this.step_no = step_no
 }
 
 let show = ({id, action, completed, step_no}) => {
