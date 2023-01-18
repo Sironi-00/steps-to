@@ -16,12 +16,32 @@ let Local_save = () => {
     localStorage.setItem(LOCAL_TODO_ARR, JSON.stringify(Todos_arr));
 }
 
-let Local_load = () => {
+let Local_load = (foreign_key) => {
+    LOCAL_TODO_ARR = foreign_key;
     let lo_arr = JSON.parse(localStorage.getItem(LOCAL_TODO_ARR))
     Todos_arr = lo_arr ? lo_arr: []
-    render();
+    form_todo()
 }
 
+let form_todo = () => {
+    document.getElementById("frame").innerHTML = `
+    <div id="screen">
+    </div>
+    <div id="entry">
+    <h3>Add</h3>
+    <label for="action">Action: </label>
+    <input type="text" name="action" id="entry-action">
+    <label for="step">Step No.</label>
+    <input type="number" name="step" id="entry-step">
+    <label for="competed">Completed:</label>
+    <input type="checkbox" name="competed" id="entry-completed">
+    <button class="btns" type="submit" id="entry-add">Add</button>
+    <button class="btns" id="rm-completed">Delete Completed</button>
+    <button class="btns" id="rm-not-completed">Delete Not Completed</button>
+    <button class="btns" id="rm-all">Delete All</button>
+    </div>
+    `
+    
 // Todo Obj Constructor
 function Todo_Thing(id, action, completed, step_no) {
     // Constuructor for todo obj
@@ -140,7 +160,6 @@ entry_add.addEventListener("click", ()=>todo_entry())
 let rm_all = document.getElementById("rm-all")
 let remove_all = () => {
     // rm all todos and clear local storage
-    console.log("S",Todos_arr)
     localStorage.clear()
     Todos_arr = []
     render()
@@ -163,6 +182,89 @@ let remove_completed = (not=false) => {
 }
 rm_completed.addEventListener("click", ()=> remove_completed())
 rm_not_completed.addEventListener("click", ()=> remove_completed(true))
+render();
+}
+
+//Local_load()
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+let root_todos = []
+let LOCAL_ROOT_ARR;
+
+let root_Local_save = () => {
+    localStorage.setItem(LOCAL_ROOT_ARR, JSON.stringify(root_todos));
+}
+
+let root_Local_load = () => {
+    let root_arr = JSON.parse(localStorage.getItem(LOCAL_ROOT_ARR))
+    root_todos = root_arr ? root_arr: []
+
+}
+
+console.log("in main")
+let root_sc = () => {
+    root_Local_load()
+    document.getElementById("frame").innerHTML = `
+        <div class="page">
+        <h1>Page</h1>
+        <div id="home-screen">
+        </div>
+        <div id="create-root">
+        <h3>Create Root Dir</h3>
+        <label for="name">Name: </label>
+        <input id="root-name" type="text" name="name" id="">
+        <button id="make-root" type="submit">Add</button>
+        </div>
+        </div>
+    `
+    let root_scrn = document.getElementById("home-screen")
+    
+    let root_show = (name) => {
+        let root_nd = document.createElement("div")
+        root_nd.setAttribute("class", "root-node")
+        root_nd.innerHTML = `
+        <a id="${name}" href="#">${name}</a>
+        <button id="delete${name}" type="submit">Delete</button>
+        `
+        root_scrn.append(root_nd)
+        document.getElementById(name).addEventListener("click", ()=>Local_load(name))
+        document.getElementById(`delete${name}`).addEventListener("click", ()=> rm_root(name))
+    }
+
+    let rm_root = (r_name) => {
+        //rm todo by id 
+        let temp_arr = []
+        root_todos.forEach(e_name=>{
+            if (e_name != r_name) temp_arr.push(e_name)
+        })
+        root_todos = temp_arr;
+        localStorage.removeItem(r_name)
+        root_render();
+    }
+
+    let root_render = () => {
+        root_Local_save();
+        root_scrn.innerHTML = ""
+        root_todos.forEach(root=> root_show(root))
+    }
+    
+    let make_root = () => {
+        let root_name = document.getElementById("root-name").value
+        if (root_name.length < 1) return "404"
+        root_todos.push(root_name)
+        root_render()
+        root_Local_save()
+    }
+    root_render()
+    //console.log(document.getElementById("make-root"))
+    document.getElementById("make-root").addEventListener("click", ()=> make_root())
+}
 
 
-Local_load()
+//document.getElementById("screen").innerHTML = `<object type="text/html" data="./main.html"></object>`
+document.getElementById("load-b").addEventListener("click", ()=> root_sc())
+root_sc()
