@@ -151,6 +151,7 @@ entry_add.addEventListener("click", ()=>todo_entry())
 // Remove todos
 let rm_all = document.getElementById("rm-all")
 let remove_all = () => {
+    // req confirmation
     // rm all todos and clear local storage
     localStorage.clear()
     Todos_arr = []
@@ -251,8 +252,25 @@ let root_sc = () => {
     //console.log(document.getElementById("make-root"))
     document.getElementById("make-root").addEventListener("click", ()=> make_root())
 }
-
-
 //document.getElementById("screen").innerHTML = `<object type="text/html" data="./main.html"></object>`
 document.getElementById("return-home").addEventListener("click", ()=> root_sc())
 root_sc()
+
+let theme = () => {
+    // Day & Night Mode
+    let theme_state = false
+    let toggle_theme = () => {
+        if (theme_state) {
+            document.documentElement.style.setProperty("--color1", "#265879")
+            document.documentElement.style.setProperty("--color2", "#FFF")
+            document.documentElement.style.setProperty("--color3", "#000")
+        } else {
+            document.documentElement.style.setProperty("--color1", "#FFF")
+            document.documentElement.style.setProperty("--color2", "#000")
+            document.documentElement.style.setProperty("--color3", "#265879")
+        }
+        theme_state = !theme_state
+    }
+    document.getElementById("theme-color").addEventListener("click", ()=> toggle_theme())
+}
+theme()
