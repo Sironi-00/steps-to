@@ -25,169 +25,160 @@ let Local_load = (foreign_key) => {
 
 let form_todo = () => {
     document.getElementById("frame").innerHTML = `
-    <h2>Todo: ${LOCAL_TODO_ARR}</h2>
-    <div id="screen">
-    </div>
-    <div id="entry">
-    <h3>Add Todo</h3>
-    <label for="action">
-        Activity: 
-        <input type="text" name="action" id="entry-action" placeholder="Learn React" required="true">
-    </label>
-    <label for="step">
-        No.
-        <input type="number" name="step" id="entry-step" placeholder="1">
-    </label>
-    <label for="competed">
-        Completed:
-        <input type="checkbox" name="competed" id="entry-completed">
-    </label>
-    <button class="btns" type="submit" id="entry-add">Add</button>
-    <div class="rm-block">
-    <button class="btns" id="rm-completed">Delete Completed</button>
-    <button class="btns" id="rm-not-completed">Delete Not Completed</button>
-    <button class="btns" id="rm-all">Delete All</button>
-    </div>
-    </div>
-    `
-    
-// Todo Obj Constructor
-function Todo_Thing(id, action, completed, step_no) {
-    // Constuructor for todo obj
-    this.id = id,
-    this.action = action,
-    this.completed = completed,
-    this.step_no = step_no
-}
-
-let show = ({id, action, completed, step_no}) => {
-    let to_node = document.createElement("div")
-    to_node.setAttribute("class", "todo")
-    // Creates Step selector options
-    let step_options = ""
-    for (let i = 0; i <= Todos_arr.length; i++) {
-        step_options += `<option value="${i}">${i}</option>`
-    }
-
-    to_node.innerHTML = `
-        <h4 class="todo-step">
-        No. <select class="todo-select" name="step-select" id="step-no-opt${id}">${step_options}</select>
-        </h3>
-        <p class="todo-action">Activity: <span>${action}</span></P>
-        <label class="todo-complete" for="todo-Completed">
-            Completed:
-            <input class="todo-complete-check" type="checkbox" name="todo-competed" id="todo-completed${id}">
+        <h2>Todo: ${LOCAL_TODO_ARR}</h2>
+        <div id="screen">
+        </div>
+        <div id="entry">
+        <h3>Add Todo</h3>
+        <label for="action">
+            Activity: 
+            <input type="text" name="action" id="entry-action" placeholder="Learn React" required="true">
         </label>
-        <button class="btns todo-remove" id="${id}">Remove</button>
-    `;
-    let scrn = document.getElementById("screen");
-    scrn.append(to_node);
-
-    // Ev
-    document.getElementById(id).addEventListener("click", ()=>rm_todo(id))
-    document.getElementById(`todo-completed${id}`).checked = completed;
-    document.getElementById(`todo-completed${id}`).addEventListener("change", ()=>toggle_completed(id))
-    document.getElementById(`step-no-opt${id}`).value = step_no
-    document.getElementById(`step-no-opt${id}`).addEventListener("change", ()=> update_step(id, document.getElementById(`step-no-opt${id}`).value))
-}
-// in Remove
-let rm_todo = (e_id) => {
-    //rm todo by id 
-    let temp_arr = []
-    Todos_arr.forEach(todo=>{
-        if (todo.id != e_id) temp_arr.push(todo)
-    })
-    Todos_arr = temp_arr;
-    render();
-}
-let toggle_completed = (e_id) => {
-    //complete todo 
-    let temp_arr = []
-    Todos_arr.forEach(todo=>{
-        if (todo.id == e_id) todo.completed = !todo.completed
-        temp_arr.push(todo)
-    })
-    Todos_arr = temp_arr;
-    render()
-}
-
-let update_step = (e_id, step_v) => {
-    //complete todo 
-    let temp_arr = []
-    Todos_arr.forEach(todo=>{
-        if (todo.id == e_id) todo.step_no = step_v
-        temp_arr.push(todo)
-    })
-    Todos_arr = temp_arr;
-    render()
-}
-
-let render = () => {
-    // clears and shows items in screen
-    document.getElementById("screen").innerHTML = ""
-    let sort_fn = (a, b) => {
-        // sort todo objs by step no
-        if (a.step_no < b.step_no) return -1
-        if (a.step_no > b.step_no) return 1
-        return 0
+        <label for="step">
+            No.
+            <input type="number" name="step" id="entry-step" placeholder="1">
+        </label>
+        <label for="competed">
+            Completed:
+            <input type="checkbox" name="competed" id="entry-completed">
+        </label>
+        <button class="btns" type="submit" id="entry-add">Add</button>
+        <div class="rm-block">
+        <button class="btns rm-btns" id="rm-completed">Delete Completed</button>
+        <button class="btns rm-btns" id="rm-not-completed">Delete Not Completed</button>
+        </div>
+        </div>
+    `
+        
+    // Todo Obj Constructor
+    function Todo_Thing(id, action, completed, step_no) {
+        // Constuructor for todo obj
+        this.id = id,
+        this.action = action,
+        this.completed = completed,
+        this.step_no = step_no
     }
-    Todos_arr.sort(sort_fn)
-    Local_save()
-    Todos_arr.forEach(todo=>show(todo))
-}
 
-// Entry
-let entry_add = document.getElementById("entry-add")
-let todo_entry = () => {
-    let entry_action = document.getElementById("entry-action").value
-    let entry_step = document.getElementById("entry-step").value
-    let entry_completed = document.getElementById("entry-completed").checked
-    let entry_id = Todos_arr.length+1
-    
-    let new_todo = new Todo_Thing(entry_id, entry_action, entry_completed, entry_step)
-    Todos_arr.push(new_todo)
+    let show = ({id, action, completed, step_no}) => {
+        // Display a todo obj
+        let to_node = document.createElement("div")
+        to_node.setAttribute("class", "todo")
+        // Creates Step selector options
+        let step_options = ""
+        for (let i = 0; i <= Todos_arr.length; i++) {
+            step_options += `<option value="${i}">${i}</option>`
+        }
 
-    render()
-    //add clear fields on sub
-}
-entry_add.addEventListener("click", ()=>todo_entry())
+        to_node.innerHTML = `
+            <h4 class="todo-step">
+            No. <select class="todo-select" name="step-select" id="step-no-opt${id}">${step_options}</select>
+            </h3>
+            <p class="todo-action">Activity: <span>${action}</span></P>
+            <label class="todo-complete" for="todo-Completed">
+                Completed:
+                <input class="todo-complete-check" type="checkbox" name="todo-competed" id="todo-completed${id}">
+            </label>
+            <button class="btns todo-remove" id="${id}">Remove</button>
+        `;
+        let scrn = document.getElementById("screen");
+        scrn.append(to_node);
 
+        // Todo Ev
+        document.getElementById(id).addEventListener("click", ()=>rm_todo(id))
+        document.getElementById(`todo-completed${id}`).checked = completed;
+        document.getElementById(`todo-completed${id}`).addEventListener("change", ()=>toggle_completed(id))
+        document.getElementById(`step-no-opt${id}`).value = step_no
+        document.getElementById(`step-no-opt${id}`).addEventListener("change", ()=> update_step(id, document.getElementById(`step-no-opt${id}`).value))
+    }
+    // internal Remove
+    let rm_todo = (e_id) => {
+        //rm todo by id 
+        let temp_arr = []
+        Todos_arr.forEach(todo=>{
+            if (todo.id != e_id) temp_arr.push(todo)
+        })
+        Todos_arr = temp_arr;
+        render();
+    }
+    let toggle_completed = (e_id) => {
+        //complete todo 
+        let temp_arr = []
+        Todos_arr.forEach(todo=>{
+            if (todo.id == e_id) todo.completed = !todo.completed
+            temp_arr.push(todo)
+        })
+        Todos_arr = temp_arr;
+        render()
+    }
 
-//////////////////////////////////////////////////////////////////////
-// Remove todos
-let rm_all = document.getElementById("rm-all")
-let remove_all = () => {
-    // req confirmation
-    // rm all todos and clear local storage
-    localStorage.clear()
-    Todos_arr = []
-    render()
-}
-rm_all.addEventListener("click", ()=> remove_all())
+    let update_step = (e_id, step_v) => {
+        //complete todo 
+        let temp_arr = []
+        Todos_arr.forEach(todo=>{
+            if (todo.id == e_id) todo.step_no = step_v
+            temp_arr.push(todo)
+        })
+        Todos_arr = temp_arr;
+        render()
+    }
 
-let rm_completed = document.getElementById("rm-completed")
-let rm_not_completed = document.getElementById("rm-not-completed")
-let remove_completed = (not=false) => {
-    //rm ?completed todos
-    let temp_arr = []
-    Todos_arr.forEach(todo=>{
-        // rm not completed
-        if (todo.completed & not) temp_arr.push(todo)
-        // rm completed
-        if (!todo.completed & !not) temp_arr.push(todo)
-    })
-    Todos_arr = temp_arr;
+    let render = () => {
+        // clears and shows items in screen
+        document.getElementById("screen").innerHTML = ""
+        let sort_fn = (a, b) => {
+            // sort todo objs by step no
+            if (a.step_no < b.step_no) return -1
+            if (a.step_no > b.step_no) return 1
+            return 0
+        }
+        Todos_arr.sort(sort_fn)
+        Local_save()
+        Todos_arr.forEach(todo=>show(todo))
+    }
+
+    // Entry
+    let entry_add = document.getElementById("entry-add")
+    let todo_entry = () => {
+        let entry_action = document.getElementById("entry-action").value
+        let entry_step = document.getElementById("entry-step").value
+        let entry_completed = document.getElementById("entry-completed").checked
+        let entry_id = Todos_arr.length+1
+        
+        let new_todo = new Todo_Thing(entry_id, entry_action, entry_completed, entry_step)
+        Todos_arr.push(new_todo)
+
+        render()
+        // #>add clear fields on sub
+    }
+    entry_add.addEventListener("click", ()=>todo_entry())
+
+    //////////////////////////////////////////////////////////////////////
+    // Remove todos
+    let rm_completed = document.getElementById("rm-completed")
+    let rm_not_completed = document.getElementById("rm-not-completed")
+    let remove_completed = (not=false) => {
+        //rm ?completed todos
+        let temp_arr = []
+        Todos_arr.forEach(todo=>{
+            // rm not completed
+            if (todo.completed & not) temp_arr.push(todo)
+            // rm completed
+            if (!todo.completed & !not) temp_arr.push(todo)
+        })
+        Todos_arr = temp_arr;
+        render();
+    }
+    rm_completed.addEventListener("click", ()=> remove_completed())
+    rm_not_completed.addEventListener("click", ()=> remove_completed(true))
     render();
 }
-rm_completed.addEventListener("click", ()=> remove_completed())
-rm_not_completed.addEventListener("click", ()=> remove_completed(true))
-render();
-}
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// ROOT
 
 let root_todos = []
 let LOCAL_ROOT_ARR;
@@ -202,20 +193,23 @@ let root_Local_load = () => {
 }
 
 console.log("in main")
-let root_sc = () => {
+let form_root = () => {
     root_Local_load()
     document.getElementById("frame").innerHTML = `
-        <p class="root-text">Each root Todo can hold a list (branch) of todo's which have move functions</p>
+        <p class="root-text"><span>Root Todo(s)</span> Each root Todo can hold a list (branch) of todo's which have move functions</p>
         <div id="home-screen">
         </div>
         <div id="create-root">
         <h3>Create Root Todo</h3>
-        <label for="name">Name: </label>
-        <input id="root-name" type="text" name="name" id="" placeholder="Shopping List">
+        <label for="name">
+            Name: 
+            <input id="root-name" type="text" name="name" id="" placeholder="Shopping List">
+        </label>
         <button class="btns" id="make-root" type="submit">Create</button>
+        <button class="btns rm-btns" id="rm-all">Delete All</button>
         </div>
     `
-    let root_scrn = document.getElementById("home-screen")
+    let form_rootrn = document.getElementById("home-screen")
     
     let root_show = (name) => {
         let root_nd = document.createElement("div")
@@ -224,7 +218,7 @@ let root_sc = () => {
         <a id="${name}" class="root-link" href="#">${name}</a>
         <button  class="btns root-delete" id="delete${name}" type="submit">Delete</button>
         `
-        root_scrn.append(root_nd)
+        form_rootrn.append(root_nd)
         document.getElementById(name).addEventListener("click", ()=>Local_load(name))
         document.getElementById(`delete${name}`).addEventListener("click", ()=> rm_root(name))
     }
@@ -242,7 +236,7 @@ let root_sc = () => {
 
     let root_render = () => {
         root_Local_save();
-        root_scrn.innerHTML = ""
+        form_rootrn.innerHTML = ""
         root_todos.forEach(root=> root_show(root))
     }
     
@@ -255,12 +249,29 @@ let root_sc = () => {
         root_Local_save()
     }
     root_render()
-    //console.log(document.getElementById("make-root"))
     document.getElementById("make-root").addEventListener("click", ()=> make_root())
+    
+    ////////////////////////////////////////////////////////
+    // Remove all todos 
+    let rm_confirm = 0
+    let rm_all = document.getElementById("rm-all")
+    let remove_all = () => {
+        // confirmation
+        if (rm_confirm < 1) {
+            alert("Press again to delete all todos")
+            return rm_confirm += 1 
+        }
+        // rm all todos and clear local storage
+        localStorage.clear()
+        rm_confirm = 0
+        root_todos = []
+        root_render()
+    }
+    rm_all.addEventListener("click", ()=> remove_all())
+
 }
-//document.getElementById("screen").innerHTML = `<object type="text/html" data="./main.html"></object>`
-document.getElementById("return-home").addEventListener("click", ()=> root_sc())
-root_sc()
+document.getElementById("return-home").addEventListener("click", ()=> form_root())
+form_root()
 
 let theme = () => {
     // Day & Night Mode

@@ -2,6 +2,9 @@
     text-align: center;
     margin-bottom: 0.75rem;
 }
+.root-text span {
+    font-weight: bold;
+}
 .root-node {
     padding: 0.75rem;
     text-align: center;

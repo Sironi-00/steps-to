@@ -126,6 +126,9 @@ header, #entry, #create-root {
     border-radius: 0;
     box-shadow: 0 0 12px var(--color3);
 }
+.rm-btns {
+    margin-top: 0.5rem;
+}
 .rm-block {
     display: block;
 }
