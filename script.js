@@ -25,20 +25,25 @@ let Local_load = (foreign_key) => {
 
 let form_todo = () => {
     document.getElementById("frame").innerHTML = `
+    <header>
+    <h2>Todo: ${LOCAL_TODO_ARR}</h2>
+    </header>
     <div id="screen">
     </div>
     <div id="entry">
-    <h3>Add</h3>
-    <label for="action">Action: </label>
+    <h3>Add Todo</h3>
+    <label for="action">Activity: </label>
     <input type="text" name="action" id="entry-action">
-    <label for="step">Step No.</label>
+    <label for="step">No.</label>
     <input type="number" name="step" id="entry-step">
     <label for="competed">Completed:</label>
     <input type="checkbox" name="competed" id="entry-completed">
     <button class="btns" type="submit" id="entry-add">Add</button>
+    <div class="rm-block">
     <button class="btns" id="rm-completed">Delete Completed</button>
     <button class="btns" id="rm-not-completed">Delete Not Completed</button>
     <button class="btns" id="rm-all">Delete All</button>
+    </div>
     </div>
     `
     
@@ -62,9 +67,9 @@ let show = ({id, action, completed, step_no}) => {
 
     to_node.innerHTML = `
         <h4 class="todo-step">
-        STEP: <select class="todo-select" name="step-select" id="step-no-opt${id}">${step_options}</select>
+        No. <select class="todo-select" name="step-select" id="step-no-opt${id}">${step_options}</select>
         </h3>
-        <p class="todo-action">Action: <span>${action}</span></P>
+        <p class="todo-action">Activity: <span>${action}</span></P>
         <label class="todo-complete" for="todo-Completed">
             Completed:
             <input class="todo-complete-check" type="checkbox" name="todo-competed" id="todo-completed${id}">
@@ -199,16 +204,16 @@ console.log("in main")
 let root_sc = () => {
     root_Local_load()
     document.getElementById("frame").innerHTML = `
-        <div class="page">
-        <h1>Page</h1>
+        <header>
+        <p>Each root Todo can hold a list (branch) of todo's which have move functions</p>
+        </header>
         <div id="home-screen">
         </div>
-        <div id="create-root">
-        <h3>Create Root Dir</h3>
+        <div class="create-root">
+        <h3>Create Root Todo</h3>
         <label for="name">Name: </label>
         <input id="root-name" type="text" name="name" id="">
-        <button id="make-root" type="submit">Add</button>
-        </div>
+        <button class="btns" id="make-root" type="submit">Create</button>
         </div>
     `
     let root_scrn = document.getElementById("home-screen")
@@ -217,8 +222,8 @@ let root_sc = () => {
         let root_nd = document.createElement("div")
         root_nd.setAttribute("class", "root-node")
         root_nd.innerHTML = `
-        <a id="${name}" href="#">${name}</a>
-        <button id="delete${name}" type="submit">Delete</button>
+        <a id="${name}" class="root-link" href="#">${name}</a>
+        <button  class="btns root-delete" id="delete${name}" type="submit">Delete</button>
         `
         root_scrn.append(root_nd)
         document.getElementById(name).addEventListener("click", ()=>Local_load(name))
@@ -244,7 +249,8 @@ let root_sc = () => {
     
     let make_root = () => {
         let root_name = document.getElementById("root-name").value
-        if (root_name.length < 1) return "404"
+        if (root_name.length < 1) return alert("Lenght of name cannot be les than 1")
+        if (root_todos.includes(root_name)) return alert("Name already exists: Enter a different name")
         root_todos.push(root_name)
         root_render()
         root_Local_save()
@@ -256,5 +262,5 @@ let root_sc = () => {
 
 
 //document.getElementById("screen").innerHTML = `<object type="text/html" data="./main.html"></object>`
-document.getElementById("load-b").addEventListener("click", ()=> root_sc())
+document.getElementById("return-home").addEventListener("click", ()=> root_sc())
 root_sc()

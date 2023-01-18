@@ -1,0 +1,25 @@
+.root-node {
+    margin: 0.5rem;
+    padding: 0.75rem;
+    border-left: 4px solid var(--color3);
+    border-bottom: 4px solid var(--color3);
+    /* box-shadow: 0 0 12px var(--color3), inset 20px 0px 12px var(--color3), inset -20px 0px 12px var(--color3); */
+    box-shadow: 0 0 12px var(--color3);
+    text-align: center;
+}
+.root-node:hover {
+    border: 2px solid var(--color2);
+}
+.root-delete {
+    float: right;
+    margin: -2px 2px;
+}
+.root-link {
+    color: var(--color2);
+    color: inherit;
+    padding: 0.75rem;
+}
+.root-link:hover {
+    color: var(--color1);
+    background-color: var(--color3)
+}

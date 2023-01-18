@@ -32,6 +32,12 @@ main {
         margin: auto;
     }
 }
+@media screen and (max-width: 400px) {
+    * {
+        margin-inline: 1px;
+        padding-inline: 1px !important;
+    }
+}
 header {
     top: 0
 }
@@ -60,15 +66,20 @@ header, #entry {
     box-shadow: 0 0 12px var(--color3);
 
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
 }
 .todo:hover {
     border: 2px solid var(--color2);
 }
 .todo-select {
-    background-color: transparent;
+    background-color: var(--color1);
+    color: var(--color2);
+    font-size: 100%;
     border: none;
-    box-shadow: inset 0 0 4px var(--color3);
+    /* box-shadow: inset 0 0 4px var(--color3); */
+    box-shadow: inset 0 0 1px var(--color3);
+    border-bottom: 2px solid var(--color3);
     padding: 4px;
 }
 .todo-step , .todo-action, .todo-complete {
@@ -76,9 +87,17 @@ header, #entry {
     padding: 0.25rem;
 }
 .todo-action span {
-    border-bottom: 2px solid var(--color2);
+    border-bottom: 2px solid var(--color3);
 }
 .btns {
     margin: 0.125rem 0.5rem;
     padding: 0.125rem 0.25rem;
+    border-radius: 0;
+    box-shadow: 0 0 12px var(--color3);
+}
+.rm-block {
+    display: block;
+}
+#return-home {
+    
 }
