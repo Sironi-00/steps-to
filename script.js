@@ -94,33 +94,27 @@ let form_todo = () => {
     // internal Remove
     let rm_todo = (e_id) => {
         //rm todo by id 
-        let temp_arr = []
-        Todos_arr.forEach(todo=>{
-            if (todo.id != e_id) temp_arr.push(todo)
+        Todos_arr = Todos_arr.filter((todo)=> {
+            if (todo.id != e_id) return todo
         })
-        Todos_arr = temp_arr;
-        render();
+        return render()
     }
     let toggle_completed = (e_id) => {
         //complete todo 
-        let temp_arr = []
-        Todos_arr.forEach(todo=>{
+        Todos_arr.map((todo)=> {
             if (todo.id == e_id) todo.completed = !todo.completed
-            temp_arr.push(todo)
+            return todo
         })
-        Todos_arr = temp_arr;
-        render()
+        return render()
     }
 
     let update_step = (e_id, step_v) => {
         //complete todo 
-        let temp_arr = []
-        Todos_arr.forEach(todo=>{
+        Todos_arr.map((todo)=> {
             if (todo.id == e_id) todo.step_no = step_v
-            temp_arr.push(todo)
+            return todo
         })
-        Todos_arr = temp_arr;
-        render()
+        return render()
     }
 
     let render = () => {
@@ -145,7 +139,7 @@ let form_todo = () => {
         let entry_step = document.getElementById("entry-step").value
         let entry_completed = document.getElementById("entry-completed").checked
         let create_uid = (new_id) => {
-            // makes unique id 
+            // unique todo id fn
             Todos_arr.forEach(todo=>{
                 if (todo.id == new_id) new_id = create_uid(new_id + 1)
             })
@@ -167,14 +161,12 @@ let form_todo = () => {
     let rm_not_completed = document.getElementById("rm-not-completed")
     let remove_completed = (not=false) => {
         //rm ?completed todos
-        let temp_arr = []
-        Todos_arr.forEach(todo=>{
+        Todos_arr = Todos_arr.filter(todo=>{
             // rm not completed
-            if (todo.completed & not) temp_arr.push(todo)
+            if (todo.completed & not) return todo
             // rm completed
-            if (!todo.completed & !not) temp_arr.push(todo)
+            if (!todo.completed & !not) return todo
         })
-        Todos_arr = temp_arr;
         render();
     }
     rm_completed.addEventListener("click", ()=> remove_completed())
@@ -234,11 +226,9 @@ let form_root = () => {
 
     let rm_root = (r_name) => {
         //rm todo by id 
-        let temp_arr = []
-        root_todos.forEach(e_name=>{
-            if (e_name != r_name) temp_arr.push(e_name)
+        root_todos = root_todos.filter(e_name=>{
+            if (e_name != r_name) return e_name
         })
-        root_todos = temp_arr;
         localStorage.removeItem(r_name)
         root_render();
     }
