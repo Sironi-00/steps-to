@@ -290,3 +290,14 @@ let theme = () => {
     document.getElementById("theme-color").addEventListener("click", ()=> toggle_theme())
 }
 theme()
+
+let theme_save = (mode) => {
+    let saved_theme = document.cookie
+    if (saved_theme.length < 1) {
+        saved_theme = `theme-mode=${mode}`
+    } else {
+        return saved_theme
+    }
+    console.log(saved_theme)
+}
+theme_save("light")
