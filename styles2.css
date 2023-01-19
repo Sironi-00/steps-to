@@ -1,3 +1,4 @@
+/* mostly Root styles */
 .root-text, h2 {
     text-align: center;
     margin-bottom: 0.75rem;
@@ -30,7 +31,6 @@
     color: var(--color1);
     background-color: var(--color3);
 }
-
 @keyframes blink {
     50% {
         text-shadow: 0 0 18px var(--color2);

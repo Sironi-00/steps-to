@@ -1,4 +1,4 @@
-console.log("By Sironi \nhttps://github.com/Sironi-00/steps-to")
+console.log("By Sironi \nhttps://github.com/Sironi-00/")
 // Dir store steps 
 
 // One > 1,2,3,4
