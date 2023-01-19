@@ -1,4 +1,4 @@
-console.log("Hi")
+console.log("By Sironi \nhttps://github.com/Sironi-00/steps-to")
 // Dir store steps 
 
 // One > 1,2,3,4
@@ -24,15 +24,16 @@ let Local_load = (foreign_key) => {
 }
 
 let form_todo = () => {
+    // todos page script
     document.getElementById("frame").innerHTML = `
         <h2>Todo: ${LOCAL_TODO_ARR}</h2>
         <div id="screen">
         </div>
         <div id="entry">
         <h3>Add Todo</h3>
-        <label for="action">
+        <label for="activity">
             Activity: 
-            <input type="text" name="action" id="entry-action" placeholder="Learn React" required="true">
+            <input type="text" name="activity" id="entry-activity" placeholder="Learn React" required="true">
         </label>
         <label for="step">
             No.
@@ -51,15 +52,15 @@ let form_todo = () => {
     `
         
     // Todo Obj Constructor
-    function Todo_Thing(id, action, completed, step_no) {
+    function Todo_Thing(id, activity, completed, step_no) {
         // Constuructor for todo obj
         this.id = id,
-        this.action = action,
+        this.activity = activity,
         this.completed = completed,
         this.step_no = step_no
     }
 
-    let show = ({id, action, completed, step_no}) => {
+    let show = ({id, activity, completed, step_no}) => {
         // Display a todo obj
         let to_node = document.createElement("div")
         to_node.setAttribute("class", "todo")
@@ -73,7 +74,7 @@ let form_todo = () => {
             <h4 class="todo-step">
             No. <select class="todo-select" name="step-select" id="step-no-opt${id}">${step_options}</select>
             </h3>
-            <p class="todo-action">Activity: <span>${action}</span></P>
+            <p class="todo-activity">Activity: <span>${activity}</span></P>
             <label class="todo-complete" for="todo-Completed">
                 Completed:
                 <input class="todo-complete-check" type="checkbox" name="todo-competed" id="todo-completed${id}">
@@ -139,12 +140,20 @@ let form_todo = () => {
     // Entry
     let entry_add = document.getElementById("entry-add")
     let todo_entry = () => {
-        let entry_action = document.getElementById("entry-action").value
+        // get info from input and create a todo
+        let entry_activity = document.getElementById("entry-activity").value
         let entry_step = document.getElementById("entry-step").value
         let entry_completed = document.getElementById("entry-completed").checked
-        let entry_id = Todos_arr.length+1
-        
-        let new_todo = new Todo_Thing(entry_id, entry_action, entry_completed, entry_step)
+        let create_uid = (new_id) => {
+            // makes unique id 
+            Todos_arr.forEach(todo=>{
+                if (todo.id == new_id) new_id = create_uid(new_id + 1)
+            })
+            return new_id
+        }
+        let entry_id = create_uid(Todos_arr.length)
+        // Create a todo with input
+        let new_todo = new Todo_Thing(entry_id, entry_activity, entry_completed, entry_step)
         Todos_arr.push(new_todo)
 
         render()
@@ -192,8 +201,8 @@ let root_Local_load = () => {
     root_todos = root_arr ? root_arr: []
 }
 
-console.log("in main")
 let form_root = () => {
+    // Root page script
     root_Local_load()
     document.getElementById("frame").innerHTML = `
         <p class="root-text"><span>Root Todo(s)</span> Each root Todo can hold a list (branch) of todo's which have move functions</p>
@@ -274,7 +283,7 @@ document.getElementById("return-home").addEventListener("click", ()=> form_root(
 form_root()
 
 let theme = () => {
-    // Day & Night Mode
+    // Dark & Light Mode
     let theme_state = false
     let toggle_theme = () => {
         if (theme_state) {

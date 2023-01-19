@@ -113,11 +113,11 @@ header, #entry, #create-root {
     border-bottom: 2px solid var(--color3);
     padding: 4px;
 }
-.todo-step , .todo-action, .todo-complete {
+.todo-step , .todo-activity, .todo-complete {
     margin: 0.125rem 0.5rem;
     padding: 0.25rem;
 }
-.todo-action span {
+.todo-activity span {
     border-bottom: 2px solid var(--color3);
 }
 .btns {
@@ -144,4 +144,7 @@ header, #entry, #create-root {
     border-radius: 50%;
     background-color: var(--color2);
     border-top: 2px inset var(--color2);
+}
+#theme-color:hover {
+    scale: 1.5;
 }
