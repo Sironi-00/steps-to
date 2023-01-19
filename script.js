@@ -252,14 +252,14 @@ let form_root = () => {
     
     ////////////////////////////////////////////////////////
     // Remove all todos 
-    let rm_confirm = 0
     let rm_all = document.getElementById("rm-all")
     let remove_all = () => {
         // rm all todos and clear local storage
-        if (rm_confirm < 1) {
+        let rm_confirm = confirm("Delete all stored todos")
+        if (!rm_confirm) {
             // confirmation
-            alert("Press again to delete all todos")
-            return rm_confirm += 1 
+            //alert("Press again to delete all todos")
+            return
         }
         localStorage.clear()
         rm_confirm = 0
