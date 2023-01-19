@@ -265,12 +265,12 @@ let form_root = () => {
     let rm_confirm = 0
     let rm_all = document.getElementById("rm-all")
     let remove_all = () => {
-        // confirmation
+        // rm all todos and clear local storage
         if (rm_confirm < 1) {
+            // confirmation
             alert("Press again to delete all todos")
             return rm_confirm += 1 
         }
-        // rm all todos and clear local storage
         localStorage.clear()
         rm_confirm = 0
         root_todos = []
