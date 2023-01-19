@@ -272,10 +272,25 @@ let form_root = () => {
 document.getElementById("return-home").addEventListener("click", ()=> form_root())
 form_root()
 
+
 let theme = () => {
+    // "username=Lorem; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    let get_val;
+    let theme_save = (boo) => {
+        // set cookie mode depending on arg (bool)
+        get_val = boo;
+        // if (boo = true) t=return get_val = "dark"
+        // return get_val = "light"
+    }
+    let theme_load = () => {
+        if (get_val) return true
+        // if (get_val = "dark") return true
+        return false
+    }
     // Dark & Light Mode
-    let theme_state = false
     let toggle_theme = () => {
+        let theme_state = theme_load()
+        console.log(theme_state)
         if (theme_state) {
             document.documentElement.style.setProperty("--color1", "#265879")
             document.documentElement.style.setProperty("--color2", "#FFF")
@@ -285,19 +300,9 @@ let theme = () => {
             document.documentElement.style.setProperty("--color2", "#000")
             document.documentElement.style.setProperty("--color3", "#265879")
         }
-        theme_state = !theme_state
+        //theme_state = !theme_state
+        theme_save(!theme_load())
     }
     document.getElementById("theme-color").addEventListener("click", ()=> toggle_theme())
 }
 theme()
-
-let theme_save = (mode) => {
-    let saved_theme = document.cookie
-    if (saved_theme.length < 1) {
-        saved_theme = `theme-mode=${mode}`
-    } else {
-        return saved_theme
-    }
-    console.log(saved_theme)
-}
-theme_save("light")
