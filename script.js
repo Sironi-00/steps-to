@@ -275,11 +275,10 @@ form_root()
 
 let theme = () => {
     // "username=Lorem; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-    //let get_val;
     let theme_save = (boo) => {
         // set cookie mode depending on arg (bool)
-        if (boo) return document.cookie = "theme-mode=dark; SameSite=Lax; expires=Sat, 21 Jan 2023 23:00:00 UTC; path=/;"
-        return document.cookie = "theme-mode=light; SameSite=Lax; expires=Sat, 21 Jan 2023 23:00:00 UTC; path=/;"
+        if (boo) return document.cookie = "theme-mode=dark; SameSite=Lax; expires=Sun, 01 Jan 2051 23:59:59 UTC; path=/;"
+        return document.cookie = "theme-mode=light; SameSite=Lax; expires=Sun, 01 Jan 2051 23:59:59 UTC; path=/;"
     }
     let theme_load = () => {
         // load theme from cookie
