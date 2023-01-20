@@ -182,7 +182,7 @@ let form_todo = () => {
 // ROOT
 
 let root_todos = []
-let LOCAL_ROOT_ARR;
+let LOCAL_ROOT_ARR = "Root-Name";
 
 let root_Local_save = () => {
     localStorage.setItem(LOCAL_ROOT_ARR, JSON.stringify(root_todos));
@@ -275,33 +275,32 @@ form_root()
 
 let theme = () => {
     // "username=Lorem; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-    let get_val;
+    //let get_val;
     let theme_save = (boo) => {
         // set cookie mode depending on arg (bool)
-        get_val = boo;
-        // if (boo = true) t=return get_val = "dark"
-        // return get_val = "light"
+        if (boo) return document.cookie = "theme-mode=dark; SameSite=Lax; expires=Sat, 21 Jan 2023 23:00:00 UTC; path=/;"
+        return document.cookie = "theme-mode=light; SameSite=Lax; expires=Sat, 21 Jan 2023 23:00:00 UTC; path=/;"
     }
     let theme_load = () => {
-        if (get_val) return true
-        // if (get_val = "dark") return true
-        return false
+        // load theme from cookie
+        let get_val = document.cookie.split('; ').find((row) => row.startsWith('theme-mode='))?.split('=')[1]
+        if (get_val == "dark") return false
+        return true
     }
     // Dark & Light Mode
-    let toggle_theme = () => {
-        let theme_state = theme_load()
-        if (theme_state) {
-            document.documentElement.style.setProperty("--color1", "#265879")
-            document.documentElement.style.setProperty("--color2", "#FFF")
-            document.documentElement.style.setProperty("--color3", "#000")
-        } else {
+    let toggle_theme = (save=false) => {
+        if (save) theme_save(theme_load())
+        if (theme_load()) {
             document.documentElement.style.setProperty("--color1", "#FFF")
             document.documentElement.style.setProperty("--color2", "#000")
             document.documentElement.style.setProperty("--color3", "#265879")
+        } else {
+            document.documentElement.style.setProperty("--color1", "#265879")
+            document.documentElement.style.setProperty("--color2", "#FFF")
+            document.documentElement.style.setProperty("--color3", "#000")
         }
-        //theme_state = !theme_state
-        theme_save(!theme_load())
     }
-    document.getElementById("theme-color").addEventListener("click", ()=> toggle_theme())
+    toggle_theme()
+    document.getElementById("theme-color").addEventListener("click", ()=> toggle_theme(true))
 }
 theme()
