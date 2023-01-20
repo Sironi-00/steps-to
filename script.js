@@ -290,7 +290,6 @@ let theme = () => {
     // Dark & Light Mode
     let toggle_theme = () => {
         let theme_state = theme_load()
-        console.log(theme_state)
         if (theme_state) {
             document.documentElement.style.setProperty("--color1", "#265879")
             document.documentElement.style.setProperty("--color2", "#FFF")
