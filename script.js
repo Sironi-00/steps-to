@@ -33,11 +33,11 @@ let form_todo = () => {
         <h3>Add Todo</h3>
         <label for="activity">
             Activity: 
-            <input type="text" name="activity" id="entry-activity" placeholder="Learn React" required="true">
+            <input type="text" name="activity" id="entry-activity" placeholder="E.g. Learn to Code" required="true">
         </label>
         <label for="step">
             No.
-            <input type="number" name="step" id="entry-step" placeholder="1">
+            <input type="number" name="step" id="entry-step" placeholder="(Optional) E.g. 1">
         </label>
         <label for="competed">
             Completed:
@@ -204,7 +204,7 @@ let form_root = () => {
         <h3>Create Root Todo</h3>
         <label for="name">
             Name: 
-            <input id="root-name" type="text" name="name" id="" placeholder="Shopping List">
+            <input id="root-name" type="text" name="name" id="" placeholder="E.g. Shopping List">
         </label>
         <button class="btns" id="make-root" type="submit">Create</button>
         <button class="btns rm-btns" id="rm-all">Delete All</button>
