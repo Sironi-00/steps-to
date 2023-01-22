@@ -80,9 +80,11 @@ header, #entry, #create-parent {
 }
 .todo {
     padding: 0.35rem;
-    display: flex;
+    /* display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: space-between; */
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
 }
 .todo, .parent-node {
     border-left: 4px solid var(--color3);
@@ -94,6 +96,15 @@ header, #entry, #create-parent {
 .todo:hover, .parent-node:hover {
     border: 2px solid var(--color2);
 }
+.todo-step , .todo-activity, .todo-complete {
+    margin: 0.125rem 0.5rem;
+    padding: 0.25rem;   
+}
+.todo-activity {
+    grid-column-start: 2;
+    grid-column-end: 6;
+        
+} 
 .todo-select {
     background-color: var(--color1);
     color: var(--color2);
@@ -104,13 +115,13 @@ header, #entry, #create-parent {
     border-bottom: 2px solid var(--color3);
     padding: 4px;
 }
-.todo-step , .todo-activity, .todo-complete {
-    margin: 0.125rem 0.5rem;
-    padding: 0.25rem;
-}
 .todo-activity span {
     border-bottom: 2px solid var(--color3);
     overflow: hidden;
+}
+.todo-remove {
+    width: max-content;
+    grid-column: -1;
 }
 .clear {
     clear: both;
