@@ -1,32 +1,25 @@
-/* mostly Root styles */
-.root-text, h2 {
-    text-align: center;
-    margin-bottom: 0.75rem;
-}
-.root-text span {
-    font-weight: bold;
-}
-.root-node {
+/* mostly parent styles */
+.parent-node {
     padding: 0.75rem;
     text-align: center;
 }
-#create-root {
+#create-parent {
     bottom: 24px;
     padding: 8px 40px;
     max-width: max-content;
     margin-inline: auto;
 }
-.root-delete {
+.parent-delete {
     float: right;
     margin: -2px 2px;
 }
-.root-link {
+.parent-link {
     color: var(--color2);
     color: inherit;
     padding: 0.75rem;
     animation: blink 1.5s 0.5s ease-in-out  infinite;
 }
-.root-link:hover {
+.parent-link:hover {
     color: var(--color1);
     background-color: var(--color3);
 }

@@ -26,7 +26,7 @@ let Local_load = (foreign_key) => {
 let form_todo = () => {
     // todos page script
     document.getElementById("frame").innerHTML = `
-        <h2>Todo: ${LOCAL_TODO_ARR}</h2>
+        <h2 class="frame-head">Children Todo(s): ${LOCAL_TODO_ARR}</h2>
         <div id="screen">
         </div>
         <div id="entry">
@@ -60,6 +60,7 @@ let form_todo = () => {
         this.step_no = step_no
     }
 
+    let to_screen = document.getElementById("screen");
     let show = ({id, activity, completed, step_no}) => {
         // Display a todo obj
         let to_node = document.createElement("div")
@@ -69,20 +70,19 @@ let form_todo = () => {
         for (let i = 0; i <= Todos_arr.length; i++) {
             step_options += `<option value="${i}">${i}</option>`
         }
-
         to_node.innerHTML = `
-            <h4 class="todo-step">
+            <h4 class="td-e todo-step">
             No. <select class="todo-select" name="step-select" id="step-no-opt${id}">${step_options}</select>
             </h3>
-            <p class="todo-activity">Activity: <span>${activity}</span></P>
+            <p class="td-e todo-activity">Activity: <span>${activity}</span></P>
             <label class="todo-complete" for="todo-Completed">
                 Completed:
                 <input class="todo-complete-check" type="checkbox" name="todo-competed" id="todo-completed${id}">
             </label>
             <button class="btns todo-remove" id="${id}">Remove</button>
+            <div class="clear"></div>
         `;
-        let scrn = document.getElementById("screen");
-        scrn.append(to_node);
+        to_screen.append(to_node);
 
         // Todo Ev
         document.getElementById(id).addEventListener("click", ()=>rm_todo(id))
@@ -119,7 +119,6 @@ let form_todo = () => {
 
     let render = () => {
         // clears and shows items in screen
-        document.getElementById("screen").innerHTML = ""
         let sort_fn = (a, b) => {
             // sort todo objs by step no
             if (a.step_no < b.step_no) return -1
@@ -128,6 +127,7 @@ let form_todo = () => {
         }
         Todos_arr.sort(sort_fn)
         Local_save()
+        to_screen.innerHTML = ""
         Todos_arr.forEach(todo=>show(todo))
     }
 
@@ -179,76 +179,75 @@ let form_todo = () => {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// ROOT
+// parent
 
-let root_todos = []
-let LOCAL_ROOT_ARR = "Root-Name";
+let parent_todos = []
+let LOCAL_PARENT_ARR = "parent-Name";
 
-let root_Local_save = () => {
-    localStorage.setItem(LOCAL_ROOT_ARR, JSON.stringify(root_todos));
+let parent_Local_save = () => {
+    localStorage.setItem(LOCAL_PARENT_ARR, JSON.stringify(parent_todos));
 }
 
-let root_Local_load = () => {
-    let root_arr = JSON.parse(localStorage.getItem(LOCAL_ROOT_ARR))
-    root_todos = root_arr ? root_arr: []
+let parent_Local_load = () => {
+    let parent_arr = JSON.parse(localStorage.getItem(LOCAL_PARENT_ARR))
+    parent_todos = parent_arr ? parent_arr: []
 }
 
-let form_root = () => {
-    // Root page script
-    root_Local_load()
+let form_parent = () => {
+    // parent page script
+    parent_Local_load()
     document.getElementById("frame").innerHTML = `
-        <p class="root-text"><span>Root Todo(s)</span> Each root Todo can hold a list (branch) of todo's which have move functions</p>
-        <div id="home-screen">
+        <h2 class="frame-head">PARENT TODO (s)</h2>
+        <div id="screen">
         </div>
-        <div id="create-root">
-        <h3>Create Root Todo</h3>
+        <div id="create-parent">
+        <h3>Create parent Todo</h3>
         <label for="name">
             Name: 
-            <input id="root-name" type="text" name="name" id="" placeholder="E.g. Shopping List">
+            <input id="parent-name" type="text" name="name" id="" placeholder="E.g. Shopping List">
         </label>
-        <button class="btns" id="make-root" type="submit">Create</button>
+        <button class="btns" id="make-parent" type="submit">Create</button>
         <button class="btns rm-btns" id="rm-all">Delete All</button>
         </div>
     `
-    let form_rootrn = document.getElementById("home-screen")
+    let to_screen = document.getElementById("screen")
     
-    let root_show = (name) => {
-        let root_nd = document.createElement("div")
-        root_nd.setAttribute("class", "root-node")
-        root_nd.innerHTML = `
-        <a id="${name}" class="root-link" href="#">${name}</a>
-        <button  class="btns root-delete" id="delete${name}" type="submit">Delete</button>
+    let parent_show = (name) => {
+        let parent_nd = document.createElement("div")
+        parent_nd.setAttribute("class", "parent-node")
+        parent_nd.innerHTML = `
+        <a id="${name}" class="parent-link" href="#">${name}</a>
+        <button  class="btns parent-delete" id="delete${name}" type="submit">Delete</button>
         `
-        form_rootrn.append(root_nd)
+        to_screen.append(parent_nd)
         document.getElementById(name).addEventListener("click", ()=>Local_load(name))
-        document.getElementById(`delete${name}`).addEventListener("click", ()=> rm_root(name))
+        document.getElementById(`delete${name}`).addEventListener("click", ()=> rm_parent(name))
     }
 
-    let rm_root = (r_name) => {
+    let rm_parent = (r_name) => {
         //rm todo by id 
-        root_todos = root_todos.filter(e_name=>{
+        parent_todos = parent_todos.filter(e_name=>{
             if (e_name != r_name) return e_name
         })
         localStorage.removeItem(r_name)
-        root_render();
+        parent_render();
     }
 
-    let root_render = () => {
-        root_Local_save();
-        form_rootrn.innerHTML = ""
-        root_todos.forEach(root=> root_show(root))
+    let parent_render = () => {
+        parent_Local_save();
+        to_screen.innerHTML = ""
+        parent_todos.forEach(parent=> parent_show(parent))
     }
     
-    let make_root = () => {
-        let root_name = document.getElementById("root-name").value
-        if (root_name.length < 1) return alert("Length of name cannot be les than 1")
-        if (root_todos.includes(root_name)) return alert("Name already exists: Enter a different name")
-        root_todos.push(root_name)
-        root_render()
-        root_Local_save()
+    let make_parent = () => {
+        let parent_name = document.getElementById("parent-name").value
+        if (parent_name.length < 1) return alert("Length of name cannot be les than 1")
+        if (parent_todos.includes(parent_name)) return alert("Name already exists: Enter a different name")
+        parent_todos.push(parent_name)
+        parent_render()
     }
-    root_render()
-    document.getElementById("make-root").addEventListener("click", ()=> make_root())
+    parent_render()
+    document.getElementById("make-parent").addEventListener("click", ()=> make_parent())
     
     ////////////////////////////////////////////////////////
     // Remove all todos 
@@ -263,14 +262,14 @@ let form_root = () => {
         }
         localStorage.clear()
         rm_confirm = 0
-        root_todos = []
-        root_render()
+        parent_todos = []
+        parent_render()
     }
     rm_all.addEventListener("click", ()=> remove_all())
 
 }
-document.getElementById("return-home").addEventListener("click", ()=> form_root())
-form_root()
+document.getElementById("return-home").addEventListener("click", ()=> form_parent())
+form_parent()
 
 
 let theme = () => {
