@@ -2,6 +2,7 @@
 .parent-node {
     padding: 0.75rem;
     text-align: center;
+    position: relative;
 }
 #create-parent {
     bottom: 24px;
@@ -10,8 +11,9 @@
     margin-inline: auto;
 }
 .parent-delete {
-    float: right;
-    margin: -2px 2px;
+    position: absolute;
+    top: 8px;
+    right: 0;
 }
 .parent-link {
     color: var(--color2);
