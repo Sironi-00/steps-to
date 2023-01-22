@@ -79,13 +79,13 @@ let form_todo = () => {
                 Completed:
                 <input class="todo-complete-check" type="checkbox" name="todo-competed" id="todo-completed${id}">
             </label>
-            <button class="btns todo-remove" id="${id}">Remove</button>
+            <button class="btns todo-remove" id="rm${id}">Remove</button>
             <div class="clear"></div>
         `;
         to_screen.append(to_node);
 
         // Todo Ev
-        document.getElementById(id).addEventListener("click", ()=>rm_todo(id))
+        document.getElementById(`rm${id}`).addEventListener("click", ()=>rm_todo(id))
         document.getElementById(`todo-completed${id}`).checked = completed;
         document.getElementById(`todo-completed${id}`).addEventListener("change", ()=>toggle_completed(id))
         document.getElementById(`step-no-opt${id}`).value = step_no

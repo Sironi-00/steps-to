@@ -8,7 +8,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    transition: all 0.3s;
+    transition: all 0.4s 0.1s;
 }
 body {
     width: 100vw;
@@ -139,6 +139,7 @@ button {
     padding: 0.125rem 0.25rem;
     border-radius: 0;
     box-shadow: 0 0 12px var(--color3);
+    height: max-content;
 }
 button:hover {
     scale: 1.15;
