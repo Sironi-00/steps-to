@@ -182,7 +182,7 @@ let form_todo = () => {
 // parent
 
 let parent_todos = []
-let LOCAL_PARENT_ARR = "parent-Name";
+let LOCAL_PARENT_ARR = "Parent-Name";
 
 let parent_Local_save = () => {
     localStorage.setItem(LOCAL_PARENT_ARR, JSON.stringify(parent_todos));
@@ -246,7 +246,15 @@ let form_parent = () => {
         parent_todos.push(parent_name)
         parent_render()
     }
-    parent_render()
+    let recover = () => {
+        // Recover todos
+        let local_keys = Object.keys(localStorage)
+        local_keys.forEach(key=> {
+            if (key != "Parent-Name" && !(key in parent_todos)) parent_todos.push(key)
+        })
+        parent_render()
+    }
+    recover()
     document.getElementById("make-parent").addEventListener("click", ()=> make_parent())
     
     ////////////////////////////////////////////////////////
