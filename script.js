@@ -161,6 +161,11 @@ let form_todo = () => {
     let rm_not_completed = document.getElementById("rm-not-completed")
     let remove_completed = (not=false) => {
         //rm ?completed todos
+        let rm_confirm = confirm("Delete all ?completed todos")
+        if (!rm_confirm) {
+            // confirmation
+            return
+        }
         Todos_arr = Todos_arr.filter(todo=>{
             // rm not completed
             if (todo.completed & not) return todo
