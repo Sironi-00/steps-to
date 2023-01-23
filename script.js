@@ -187,7 +187,6 @@ let LOCAL_PARENT_ARR = "Parent-Name";
 let parent_Local_save = () => {
     localStorage.setItem(LOCAL_PARENT_ARR, JSON.stringify(parent_todos));
 }
-
 let parent_Local_load = () => {
     let parent_arr = JSON.parse(localStorage.getItem(LOCAL_PARENT_ARR))
     parent_todos = parent_arr ? parent_arr: []
@@ -196,6 +195,15 @@ let parent_Local_load = () => {
 let form_parent = () => {
     // parent page script
     parent_Local_load()
+    let recover = () => {
+        // Recover todos - If Children exist witout a parent, then the parent is recreated.
+        let local_keys = Object.keys(localStorage)
+        local_keys.forEach(key=> {
+            if (key == "Parent-Name" | (parent_todos.includes(key))) return
+            parent_todos.push(key)
+        })
+    }
+    recover()
     document.getElementById("frame").innerHTML = `
         <h2 class="frame-head">PARENT TODO (s)</h2>
         <div id="screen">
@@ -246,15 +254,7 @@ let form_parent = () => {
         parent_todos.push(parent_name)
         parent_render()
     }
-    let recover = () => {
-        // Recover todos
-        let local_keys = Object.keys(localStorage)
-        local_keys.forEach(key=> {
-            if (key != "Parent-Name" && !(key in parent_todos)) parent_todos.push(key)
-        })
-        parent_render()
-    }
-    recover()
+    parent_render()
     document.getElementById("make-parent").addEventListener("click", ()=> make_parent())
     
     ////////////////////////////////////////////////////////
