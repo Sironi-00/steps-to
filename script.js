@@ -1,12 +1,4 @@
 console.log("By Sironi \nhttps://github.com/Sironi-00/")
-// Dir store steps 
-
-// One > 1,2,3,4
-// Two > 2,4,6,8
-// Three > 3,6,9,12
-// #[one, two, three]
-// ## [1,2,3,5]
-// K:V pair
 
 // Arr for containing all todos
 let Todos_arr = []
@@ -161,7 +153,7 @@ let form_todo = () => {
     let rm_not_completed = document.getElementById("rm-not-completed")
     let remove_completed = (not=false) => {
         //rm ?completed todos
-        let rm_confirm = confirm("Delete all ?completed todos")
+        let rm_confirm = confirm(`Delete all ${not?"not ":""}completed todos`)
         if (!rm_confirm) {
             // confirmation
             return
@@ -181,9 +173,6 @@ let form_todo = () => {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 // parent
 
 let parent_todos = []

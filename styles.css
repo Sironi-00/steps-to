@@ -24,7 +24,7 @@ main {
     overflow: auto;
     padding: 10px 20px;
 }
-/* pages style */
+/* pages + style */
 header {
     text-shadow: 3px 3px 12px var(--color3);
     top: 0
@@ -73,7 +73,7 @@ header, #entry, #create-parent {
     margin-inline: auto;
 }
 #screen {
-    min-height: 6px;
+    min-height: 12px;
     padding: 6px;
     box-shadow: inset 0 0 12px var(--color3);
 }
@@ -165,6 +165,40 @@ button:hover {
 #theme-color:hover {
     scale: 1.5;
 }
+
+/* mostly parent styles */
+.parent-node {
+    padding: 0.75rem;
+    text-align: center;
+    position: relative;
+}
+#create-parent {
+    bottom: 24px;
+    padding: 8px 40px;
+    max-width: max-content;
+    margin-inline: auto;
+}
+.parent-delete {
+    position: absolute;
+    top: 8px;
+    right: 0;
+}
+.parent-link {
+    color: var(--color2);
+    color: inherit;
+    padding: 0.75rem;
+    animation: blink 1.5s 0.5s ease-in-out  infinite;
+}
+.parent-link:hover {
+    color: var(--color1);
+    background-color: var(--color3);
+}
+@keyframes blink {
+    50% {
+        text-shadow: 0 0 18px var(--color2);
+    }
+}
+
 /* Media */
 @media screen and (min-width: 1400px) {
     body {
