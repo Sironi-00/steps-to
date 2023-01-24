@@ -325,10 +325,12 @@ let theme = () => {
             document.documentElement.style.setProperty("--color1", "#FFF")
             document.documentElement.style.setProperty("--color2", "#000")
             document.documentElement.style.setProperty("--color3", "#265879")
+            document.documentElement.style.setProperty("--rad-color", "var(--color1)")
         } else {
             document.documentElement.style.setProperty("--color1", "#265879")
             document.documentElement.style.setProperty("--color2", "#FFF")
             document.documentElement.style.setProperty("--color3", "#000")
+            document.documentElement.style.setProperty("--rad-color", "radial-gradient(at 50% 50%, var(--color1) ,var(--color3))")
         }
     }
     toggle_theme()

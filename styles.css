@@ -2,15 +2,18 @@
     --color1: #265879;
     --color2: #FFF;
     --color3: #000;
+
+    --rad-color: radial-gradient(at 50% 50%, var(--color1) ,var(--color3));
 }
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     transition: all 0.4s 0.1s;
+    text-shadow: 0 0 2px var(--color3);
 }
 body {
-    background-color: var(--color3);
+    background: var(--rad-color);
     width: 100vw;
     height: 100vh;
     display: grid;
@@ -20,7 +23,8 @@ body {
     font-size: 110%;
 }
 main {
-    background-color: var(--color1);
+    background: var(--color1);
+    background: var(--rad-color);
     color: var(--color2);
     overflow: auto;
     padding: 10px 20px;
@@ -31,10 +35,11 @@ header {
     top: 0
 }
 header, #entry, #create-parent {
+    background: var(--color1);
+    background: var(--rad-color);
     text-align: center;
     position: sticky;
     z-index: 1;
-    background-color: var(--color1);
     margin: 0.5rem;
 }
 .frame-head {
@@ -106,7 +111,7 @@ header, #entry, #create-parent {
         
 } 
 .todo-select, .parent-select{
-    background-color: var(--color1);
+    background: var(--color1);
     color: var(--color2);
     font-size: 100%;
     border: none;
@@ -130,7 +135,7 @@ header, #entry, #create-parent {
     display: none;
 }
 .btns {
-    background-color: #FFF;
+    background: #FFF;
     color: #000;
     border: 3px inset var(--color3);
 }
@@ -154,13 +159,13 @@ button:hover {
     margin-top: 0.65rem;
 }
 #theme-color {
+    background: var(--color2);
     position:absolute;
     top: 0;
     right: 0;
     width: 18px;
     height: 18px;
     border-radius: 50%;
-    background-color: var(--color2);
     border-top: 2px inset var(--color2);
 }
 #theme-color:hover {
@@ -198,7 +203,7 @@ button:hover {
 }
 .parent-link:hover {
     color: var(--color1);
-    background-color: var(--color3);
+    background: var(--color3);
 }
 @keyframes blink {
     50% {
