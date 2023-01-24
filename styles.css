@@ -215,7 +215,7 @@ button:hover {
 }
 @media screen and (max-width: 480px) {
     body {
-        padding: 1px;
+        padding: 4px;
         /* height: 95vh; */
     }
     main {
