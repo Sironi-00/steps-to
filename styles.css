@@ -10,7 +10,6 @@
     padding: 0;
     box-sizing: border-box;
     transition: all 0.4s 0.1s;
-    text-shadow: 0 0 2px var(--color3);
 }
 body {
     background: var(--rad-color);
@@ -23,7 +22,7 @@ body {
     font-size: 110%;
 }
 main {
-    background: var(--color1);
+    /* background: var(--color1); */
     background: var(--rad-color);
     color: var(--color2);
     overflow: auto;
@@ -35,7 +34,7 @@ header {
     top: 0
 }
 header, #entry, #create-parent {
-    background: var(--color1);
+    /* background: var(--color1); */
     background: var(--rad-color);
     text-align: center;
     position: sticky;
@@ -85,13 +84,11 @@ header, #entry, #create-parent {
 }
 .todo {
     padding: 0.35rem;
-    /* display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between; */
     display: grid;
     grid-template-columns: repeat(7, 1fr);
 }
 .todo, .parent-node {
+    text-shadow: 0 0 2px var(--color3);
     border-left: 4px solid var(--color3);
     border-bottom: 4px solid var(--color3);
     box-shadow: 0 0 12px var(--color3);

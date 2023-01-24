@@ -27,10 +27,6 @@ let form_todo = () => {
             Activity: 
             <input type="text" name="activity" id="entry-activity" placeholder="E.g. Learn to Code" required="true">
         </label>
-        <label for="step">
-            No.
-            <input type="number" name="step" id="entry-step" placeholder="(Optional) E.g. 1">
-        </label>
         <label for="competed">
             Completed:
             <input type="checkbox" name="competed" id="entry-completed">
@@ -128,7 +124,6 @@ let form_todo = () => {
     let todo_entry = () => {
         // get info from input and create a todo
         let entry_activity = document.getElementById("entry-activity").value
-        let entry_step = document.getElementById("entry-step").value
         let entry_completed = document.getElementById("entry-completed").checked
         let create_uid = (new_id) => {
             // unique todo id fn
@@ -139,7 +134,7 @@ let form_todo = () => {
         }
         let entry_id = create_uid(Todos_arr.length)
         // Create a todo with input
-        let new_todo = new Todo_Thing(entry_id, entry_activity, entry_completed, entry_step)
+        let new_todo = new Todo_Thing(entry_id, entry_activity, entry_completed, "")
         Todos_arr.push(new_todo)
 
         render()
