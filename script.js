@@ -196,6 +196,7 @@ let form_parent = () => {
     let recover = () => {
         // Recover todos - If Children exist witout a parent, then the parent is recreated.
         let local_keys = Object.keys(localStorage)
+        alert(local_keys)
         local_keys.forEach(key=> {
             if (key == "Parent-Name") return
             if (parents_arr.find(parent=> parent.name== key)) return
