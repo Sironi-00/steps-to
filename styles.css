@@ -104,7 +104,7 @@ header, #entry, #create-parent {
     grid-column-end: 6;
         
 } 
-.todo-select {
+.todo-select, .parent-select{
     background-color: var(--color1);
     color: var(--color2);
     font-size: 100%;
@@ -178,10 +178,16 @@ button:hover {
     max-width: max-content;
     margin-inline: auto;
 }
-.parent-delete {
+.parent-delete, .parent-no {
     position: absolute;
     top: 8px;
+}
+.parent-delete {
     right: 0;
+}
+.parent-no {
+    left: 0;
+    margin: 0 0.5rem ;
 }
 .parent-link {
     color: var(--color2);
@@ -224,7 +230,7 @@ button:hover {
     .todo {
         display: block;
     }
-    .todo-select {
+    .todo-select, .parent-select {
         padding: 1px 4px;
     }
     .todo-complete {

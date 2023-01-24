@@ -175,26 +175,31 @@ let form_todo = () => {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // parent
 
-let parent_todos = []
+let parents_arr = []
 let LOCAL_PARENT_ARR = "Parent-Name";
 
 let parent_Local_save = () => {
-    localStorage.setItem(LOCAL_PARENT_ARR, JSON.stringify(parent_todos));
+    localStorage.setItem(LOCAL_PARENT_ARR, JSON.stringify(parents_arr));
 }
 let parent_Local_load = () => {
     let parent_arr = JSON.parse(localStorage.getItem(LOCAL_PARENT_ARR))
-    parent_todos = parent_arr ? parent_arr: []
+    parents_arr = parent_arr ? parent_arr: []
 }
 
 let form_parent = () => {
     // parent page script
+    function parent_obj(name, no) {
+        this.name = name,
+        this.no = no
+    }
     parent_Local_load()
     let recover = () => {
         // Recover todos - If Children exist witout a parent, then the parent is recreated.
         let local_keys = Object.keys(localStorage)
         local_keys.forEach(key=> {
-            if (key == "Parent-Name" | (parent_todos.includes(key))) return
-            parent_todos.push(key)
+            if (key == "Parent-Name") return
+            if (parents_arr.find(parent=> parent.name== key)) return
+            parents_arr.push(new parent_obj(key, ""))
         })
     }
     recover()
@@ -214,38 +219,67 @@ let form_parent = () => {
     `
     let to_screen = document.getElementById("screen")
     
-    let parent_show = (name) => {
+    let parent_show = ({name, no}) => {
         let parent_nd = document.createElement("div")
         parent_nd.setAttribute("class", "parent-node")
+        let parent_no_opt = ""
+        for (let i = 1; i <= parents_arr.length; i++) {
+            parent_no_opt += `<option value="${i}">${i}</option>`
+        }
         parent_nd.innerHTML = `
-        <a id="${name}" class="parent-link" href="#">${name}</a>
-        <button  class="btns parent-delete" id="delete${name}" type="submit">Delete</button>
+            <label class="parent-no" for="parent-no">
+            No. <select class="parent-select" name="parent-no" id="parent-opt-${name}">${parent_no_opt}</select>
+            </label>
+            <a id="${name}" class="parent-link" href="#">${name}</a>
+            <button  class="btns parent-delete" id="delete${name}" type="submit">Delete</button>
         `
         to_screen.append(parent_nd)
         document.getElementById(name).addEventListener("click", ()=>Local_load(name))
         document.getElementById(`delete${name}`).addEventListener("click", ()=> rm_parent(name))
+        // Parent No
+        document.getElementById(`parent-opt-${name}`).value = no
+        document.getElementById(`parent-opt-${name}`).addEventListener("change", ()=> update_parent_no(name, document.getElementById(`parent-opt-${name}`).value))
+    }
+    let update_parent_no = (name, new_no) => {
+        // update parent's position
+        parents_arr.map((parent)=> {
+            if (parent.name == name) parent.no = new_no
+            return parent
+        })
+        return parent_render()
     }
 
     let rm_parent = (r_name) => {
         //rm todo by id 
-        parent_todos = parent_todos.filter(e_name=>{
-            if (e_name != r_name) return e_name
+        let rm_confirm = confirm("This will also delete all the children")
+        if (!rm_confirm) {
+            return
+        }
+        parents_arr = parents_arr.filter(parent=>{
+            if (parent.name != r_name) return parent
         })
-        localStorage.removeItem(r_name)
         parent_render();
     }
 
     let parent_render = () => {
+        // renders parent elements to the screen
+        let sort_parents = (a, b) => {
+            // sort todo objs by step no
+            if (a.no < b.no) return -1
+            if (a.no > b.no) return 1
+            return 0
+        }
+        parents_arr.sort(sort_parents)
         parent_Local_save();
         to_screen.innerHTML = ""
-        parent_todos.forEach(parent=> parent_show(parent))
+        parents_arr.forEach(parent=> parent_show(parent))
     }
     
     let make_parent = () => {
         let parent_name = document.getElementById("parent-name").value
         if (parent_name.length < 1) return alert("Length of name cannot be les than 1")
-        if (parent_todos.includes(parent_name)) return alert("Name already exists: Enter a different name")
-        parent_todos.push(parent_name)
+        //if (parents_arr.includes(parent_name)) return alert("Name already exists: Enter a different name")
+        parents_arr.push(new parent_obj(parent_name, ""))
         parent_render()
     }
     parent_render()
@@ -259,12 +293,10 @@ let form_parent = () => {
         let rm_confirm = confirm("Delete all stored todos")
         if (!rm_confirm) {
             // confirmation
-            //alert("Press again to delete all todos")
             return
         }
         localStorage.clear()
-        rm_confirm = 0
-        parent_todos = []
+        parents_arr = []
         parent_render()
     }
     rm_all.addEventListener("click", ()=> remove_all())
@@ -272,8 +304,8 @@ let form_parent = () => {
 }
 document.getElementById("return-home").addEventListener("click", ()=> form_parent())
 form_parent()
-
-
+//////////////////////////////////////////////////////////////
+// Theme
 let theme = () => {
     // "username=Lorem; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     let theme_save = (boo) => {
