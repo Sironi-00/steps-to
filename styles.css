@@ -3,7 +3,7 @@
     --color2: #FFF;
     --color3: #000;
 
-    --rad-color: radial-gradient(at 50% 50%, var(--color1) ,var(--color3));
+    --rad-color: radial-gradient(at 50% 50%, var(--color1), var(--color3));
 }
 * {
     margin: 0;
@@ -22,11 +22,11 @@ body {
     font-size: 110%;
 }
 main {
-    /* background: var(--color1); */
-    background: var(--rad-color);
+    /* background: var(--rad-color); */
     color: var(--color2);
     overflow: auto;
     padding: 10px 20px;
+    box-shadow: 0 0 12px var(--color3);
 }
 /* pages + style */
 header {
