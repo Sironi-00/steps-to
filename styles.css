@@ -10,6 +10,7 @@
     transition: all 0.4s 0.1s;
 }
 body {
+    background-color: var(--color3);
     width: 100vw;
     height: 100vh;
     display: grid;
