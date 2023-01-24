@@ -234,7 +234,7 @@ let form_parent = () => {
             <button  class="btns parent-delete" id="delete${name}" type="submit">Delete</button>
         `
         to_screen.append(parent_nd)
-        document.getElementById(name).addEventListener("click", ()=>Local_load(name))
+        document.getElementById(name).addEventListener("click", ()=> Local_load(name))
         document.getElementById(`delete${name}`).addEventListener("click", ()=> rm_parent(name))
         // Parent No
         document.getElementById(`parent-opt-${name}`).value = no
@@ -248,7 +248,6 @@ let form_parent = () => {
         })
         return parent_render()
     }
-
     let rm_parent = (r_name) => {
         //rm todo by id 
         let rm_confirm = confirm("This will also delete all the children")
@@ -258,9 +257,9 @@ let form_parent = () => {
         parents_arr = parents_arr.filter(parent=>{
             if (parent.name != r_name) return parent
         })
+        localStorage.removeItem(r_name);
         parent_render();
     }
-
     let parent_render = () => {
         // renders parent elements to the screen
         let sort_parents = (a, b) => {
