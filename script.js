@@ -138,7 +138,8 @@ let form_todo = () => {
         Todos_arr.push(new_todo)
 
         render()
-        // #>add clear fields on sub
+        // Reset input contents
+        document.getElementById("entry-activity").value = ""
     }
     entry_add.addEventListener("click", ()=>todo_entry())
 
@@ -275,6 +276,8 @@ let form_parent = () => {
         //if (parents_arr.includes(parent_name)) return alert("Name already exists: Enter a different name")
         parents_arr.push(new parent_obj(parent_name, ""))
         parent_render()
+        // Reset input contents
+        document.getElementById("parent-name").value = ""
     }
     parent_render()
     document.getElementById("make-parent").addEventListener("click", ()=> make_parent())
