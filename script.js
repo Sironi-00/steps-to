@@ -1,17 +1,17 @@
 console.log("By Sironi \nhttps://github.com/Sironi-00/")
 
 // Arr for containing all todos
-let Todos_arr = []
+let todos_arr = []
 let LOCAL_TODO_ARR;
 
 let Local_save = () => {
-    localStorage.setItem(LOCAL_TODO_ARR, JSON.stringify(Todos_arr));
+    localStorage.setItem(LOCAL_TODO_ARR, JSON.stringify(todos_arr));
 }
 
 let Local_load = (foreign_key) => {
     LOCAL_TODO_ARR = foreign_key;
     let lo_arr = JSON.parse(localStorage.getItem(LOCAL_TODO_ARR))
-    Todos_arr = lo_arr ? lo_arr: []
+    todos_arr = lo_arr ? lo_arr: []
     form_todo()
 }
 
@@ -40,7 +40,7 @@ let form_todo = () => {
     `
         
     // Todo Obj Constructor
-    function Todo_Thing(id, activity, completed, step_no) {
+    function Todo_obj(id, activity, completed, step_no) {
         // Constuructor for todo obj
         this.id = id,
         this.activity = activity,
@@ -55,7 +55,7 @@ let form_todo = () => {
         to_node.setAttribute("class", "todo")
         // Creates Step selector options
         let step_options = ""
-        for (let i = 0; i <= Todos_arr.length; i++) {
+        for (let i = 0; i <= todos_arr.length; i++) {
             step_options += `<option value="${i}">${i}</option>`
         }
         to_node.innerHTML = `
@@ -82,14 +82,14 @@ let form_todo = () => {
     // internal Remove
     let rm_todo = (e_id) => {
         //rm todo by id 
-        Todos_arr = Todos_arr.filter((todo)=> {
+        todos_arr = todos_arr.filter((todo)=> {
             if (todo.id != e_id) return todo
         })
         return render()
     }
     let toggle_completed = (e_id) => {
         //complete todo 
-        Todos_arr.map((todo)=> {
+        todos_arr.map((todo)=> {
             if (todo.id == e_id) todo.completed = !todo.completed
             return todo
         })
@@ -98,7 +98,7 @@ let form_todo = () => {
 
     let update_step = (e_id, step_v) => {
         //complete todo 
-        Todos_arr.map((todo)=> {
+        todos_arr.map((todo)=> {
             if (todo.id == e_id) todo.step_no = step_v
             return todo
         })
@@ -106,17 +106,17 @@ let form_todo = () => {
     }
 
     let render = () => {
-        // clears and shows items in screen
+        // clears and shows familys in screen
         let sort_fn = (a, b) => {
             // sort todo objs by step no
             if (a.step_no < b.step_no) return -1
             if (a.step_no > b.step_no) return 1
             return 0
         }
-        Todos_arr.sort(sort_fn)
+        todos_arr.sort(sort_fn)
         Local_save()
         to_screen.innerHTML = ""
-        Todos_arr.forEach(todo=>show(todo))
+        todos_arr.forEach(todo=>show(todo))
     }
 
     // Entry
@@ -127,15 +127,15 @@ let form_todo = () => {
         let entry_completed = document.getElementById("entry-completed").checked
         let create_uid = (new_id) => {
             // unique todo id fn
-            Todos_arr.forEach(todo=>{
+            todos_arr.forEach(todo=>{
                 if (todo.id == new_id) new_id = create_uid(new_id + 1)
             })
             return new_id
         }
-        let entry_id = create_uid(Todos_arr.length)
+        let entry_id = create_uid(todos_arr.length)
         // Create a todo with input
-        let new_todo = new Todo_Thing(entry_id, entry_activity, entry_completed, "")
-        Todos_arr.push(new_todo)
+        let new_todo = new Todo_obj(entry_id, entry_activity, entry_completed, "")
+        todos_arr.push(new_todo)
 
         render()
         // Reset input contents
@@ -154,7 +154,7 @@ let form_todo = () => {
             // confirmation
             return
         }
-        Todos_arr = Todos_arr.filter(todo=>{
+        todos_arr = todos_arr.filter(todo=>{
             // rm not completed
             if (todo.completed & not) return todo
             // rm completed
@@ -183,8 +183,70 @@ let parent_Local_load = () => {
 }
 
 let form_parent = () => {
+    ////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////
+    // I/O
+    // Export
+    let export_steps = (the_parents) => {
+        // Export Todos
+        function Family_obj(parent, children) {
+            // an obj that stores a parent and its children 
+            this.parent = parent,
+            this.children = children
+        }
+
+        family_arr = []
+        parent_names = the_parents.forEach(parent=> {
+            // Using the arr of parents to access children from localStorage
+            let childs = JSON.parse(localStorage.getItem(parent.name)? localStorage.getItem(parent.name): -1)        
+            family_arr.push(new Family_obj(parent.name, childs))
+        })
+
+        // *StackOverflow +
+        let time = Date.now()
+        let filename = `steps_todo_export ${time}.json`;
+        const jsonOutput = JSON.stringify(family_arr);
+        let element = document.createElement('a');
+        element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(jsonOutput));
+        element.setAttribute('download', filename);
+
+        element.style.display = 'none';
+        document.body.appendChild(element);
+
+        element.click();
+        
+        document.body.removeChild(element);
+    }
+    // Import
+    let import_steps = (event) => {
+        // *StackOverflow + ***
+        let read_file = (event) => {
+            let data;
+            let reader = new FileReader()
+            
+            function onReaderLoad(event){
+                let jsonInput = JSON.parse(event.target.result)
+                console.log(jsonInput)
+                // Import Adding + Storing logic
+                jsonInput.forEach(family=> {
+                    if (family.parent == "Parent-Name") return
+                    if (parents_arr.find(parent=> parent.name == family.parent)) return
+                    parents_arr.push(new Parent_obj(family.parent, ""))
+                    if (family.children == "-1") family.children = []
+                    localStorage.setItem(family.parent, JSON.stringify(family.children));
+                })
+                parent_render()
+            }
+            reader.onload = onReaderLoad;
+            reader.readAsText(event.target.files[0])
+            return data
+        }
+        //let file = read_file(event)
+        // arr of Family obj
+        read_file(event)
+    }
     // parent page script
-    function parent_obj(name, no) {
+    function Parent_obj(name, no) {
         this.name = name,
         this.no = no
     }
@@ -195,10 +257,10 @@ let form_parent = () => {
         local_keys.forEach(key=> {
             if (key == "Parent-Name") return
             if (parents_arr.find(parent=> parent.name== key)) return
-            parents_arr.push(new parent_obj(key, ""))
+            parents_arr.push(new Parent_obj(key, ""))
         })
     }
-    recover()
+    
     document.getElementById("frame").innerHTML = `
         <h2 class="frame-head">PARENT TODO (s)</h2>
         <div id="screen">
@@ -211,6 +273,10 @@ let form_parent = () => {
         </label>
         <button class="btns" id="make-parent" type="submit">Create</button>
         <button class="btns rm-btns" id="rm-all">Delete All</button>
+        <div id="backup">
+            <input id="import" class="btns" type="file" value="Import" accept=".json"/>
+            <button id="export" class="btns">Export</button>
+        </div>
         </div>
     `
     let to_screen = document.getElementById("screen")
@@ -253,7 +319,7 @@ let form_parent = () => {
         parents_arr = parents_arr.filter(parent=>{
             if (parent.name != r_name) return parent
         })
-        localStorage.removeItem(r_name);
+        localStorage.removefamily(r_name);
         parent_render();
     }
     let parent_render = () => {
@@ -274,13 +340,16 @@ let form_parent = () => {
         let parent_name = document.getElementById("parent-name").value
         if (parent_name.length < 1) return alert("Length of name cannot be les than 1")
         //if (parents_arr.includes(parent_name)) return alert("Name already exists: Enter a different name")
-        parents_arr.push(new parent_obj(parent_name, ""))
+        parents_arr.push(new Parent_obj(parent_name, ""))
         parent_render()
         // Reset input contents
         document.getElementById("parent-name").value = ""
     }
+    recover()
     parent_render()
     document.getElementById("make-parent").addEventListener("click", ()=> make_parent())
+    document.getElementById("export").addEventListener("click", ()=> export_steps(parents_arr))
+    document.getElementById('import').addEventListener('change', (event)=>import_steps(event));
     
     ////////////////////////////////////////////////////////
     // Remove all todos 

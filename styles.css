@@ -205,6 +205,10 @@ button:hover {
     color: var(--color1);
     background: var(--color3);
 }
+#backup {
+    display: block;
+    margin: auto;
+}
 @keyframes blink {
     50% {
         text-shadow: 0 0 18px var(--color2);
