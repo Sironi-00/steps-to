@@ -225,7 +225,7 @@ let form_parent = () => {
             <label class="parent-no" for="parent-no">
             No. <select class="parent-select" name="parent-no" id="parent-opt-${name}">${parent_no_opt}</select>
             </label>
-            <a id="${name}" class="parent-link" href="#">${name}</a>
+            <a id="${name}" class="parent-link" href="#" title="${name}">${name}</a>
             <button  class="btns parent-delete" id="delete${name}" type="submit">Delete</button>
         `
         to_screen.append(parent_nd)
