@@ -226,7 +226,6 @@ let form_parent = () => {
             
             function onReaderLoad(event){
                 let jsonInput = JSON.parse(event.target.result)
-                console.log(jsonInput)
                 // Import Adding + Storing logic
                 jsonInput.forEach(family=> {
                     if (family.parent == "Parent-Name") return
@@ -319,7 +318,7 @@ let form_parent = () => {
         parents_arr = parents_arr.filter(parent=>{
             if (parent.name != r_name) return parent
         })
-        localStorage.removefamily(r_name);
+        localStorage.removeItem(r_name);
         parent_render();
     }
     let parent_render = () => {
