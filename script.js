@@ -109,6 +109,9 @@ let form_todo = () => {
         // clears and shows familys in screen
         let sort_fn = (a, b) => {
             // sort todo objs by step no
+            if (a.no == "" && b.no != "") return 1
+            if (a.no != "" && b.no == "") return -1
+            
             if (a.step_no < b.step_no) return -1
             if (a.step_no > b.step_no) return 1
             return 0
@@ -326,6 +329,9 @@ let form_parent = () => {
         // renders parent elements to the screen
         let sort_parents = (a, b) => {
             // sort todo objs by step no
+            if (a.no == "" && b.no != "") return 1
+            if (a.no != "" && b.no == "") return -1
+
             if (a.no < b.no) return -1
             if (a.no > b.no) return 1
             return 0
