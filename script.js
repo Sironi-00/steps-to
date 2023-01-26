@@ -382,8 +382,9 @@ let theme = () => {
     // "username=Lorem; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     let theme_save = (boo) => {
         // set cookie mode depending on arg (bool)
-        if (boo) return document.cookie = "theme-mode=dark; SameSite=Lax; expires=Sun, 01 Jan 2051 23:59:59 UTC; path=/;"
-        return document.cookie = "theme-mode=light; SameSite=Lax; expires=Sun, 01 Jan 2051 23:59:59 UTC; path=/;"
+        let expire_date = "Sun, 01 Jan 2051 23:59:59 UTC"
+        if (boo) return document.cookie = `theme-mode=dark; SameSite=Lax; expires=${expire_date}; path=/;`
+        return document.cookie = `theme-mode=light; SameSite=Lax; expires=${expire_date}; path=/;`
     }
     let theme_load = () => {
         // load theme from cookie
