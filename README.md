@@ -11,7 +11,7 @@ The site is made with Html, CSS and vanilla Js.
 ### Cookies -> Theme
 - It has both Light and Dark mode which are saved as cookies
 ### IMPORT / EXPORT
-* Parent and Children Todos can be exported to a .json file & the file can be uploaded
+Parent and Children Todos can be exported to a .json file & the file then be used to restore the todos i.e on a different device.
 - Export -> Downloads a .json file that has all the todos (Parent No. is not saved)
 - Importing -> A .json file is read and the contents are loaded to Todos.
 
