@@ -20,3 +20,5 @@ With the site you can Create parent todos which allow you to add and store child
 Deleting the parent also removes the children, or Children can be individually delete
 The children todos have x values which are Activity, Number, and Completed. 
 Advanced functions are also available for the children todos i.e. Change the Number, Toggle complete, ...
+
+The site is able to Export and Import all stored todos.

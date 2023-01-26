@@ -25,16 +25,16 @@ let form_todo = () => {
         <h3>Add Todo</h3>
         <label for="activity">
             Activity: 
-            <input type="text" name="activity" id="entry-activity" placeholder="E.g. Learn to Code" required="true">
+            <input id="entry-activity"  type="text" name="activity"placeholder="E.g. Learn to Code" required="true">
         </label>
         <label for="competed">
             Completed:
-            <input type="checkbox" name="competed" id="entry-completed">
+            <input id="entry-completed" type="checkbox" name="competed">
         </label>
-        <button class="btns" type="submit" id="entry-add">Add</button>
+        <button id="entry-add" class="btns" type="submit">Add</button>
         <div class="rm-block">
-        <button class="btns rm-btns" id="rm-completed">Delete Completed</button>
-        <button class="btns rm-btns" id="rm-not-completed">Delete Not Completed</button>
+        <button id="rm-completed" class="btns rm-btns">Delete Completed</button>
+        <button id="rm-not-completed" class="btns rm-btns">Delete Not Completed</button>
         </div>
         </div>
     `
@@ -59,15 +59,15 @@ let form_todo = () => {
             child_options += `<option value="${i}">${i}</option>`
         }
         to_node.innerHTML = `
-            <h4 class="td-e todo-child">
-            No. <select class="todo-select" name="child-select" id="child-no-opt${id}">${child_options}</select>
-            </h3>
-            <p class="td-e todo-activity">Activity: <span>${activity}</span></P>
+            <label class="todo-child">
+            No. <select id="child-no-opt${id}" class="todo-select" name="child-select">${child_options}</select>
+            </label>
+            <p class="todo-activity">Activity: <span>${activity}</span></P>
             <label class="todo-complete" for="todo-Completed">
                 Completed:
-                <input class="todo-complete-check" type="checkbox" name="todo-competed" id="todo-completed${id}">
+                <input  id="todo-completed${id}" class="todo-complete-check" type="checkbox" name="todo-competed">
             </label>
-            <button class="btns todo-remove" id="rm${id}">Remove</button>
+            <button id="rm${id} class="btns todo-remove"">Remove</button>
             <div class="clear"></div>
         `;
         to_screen.append(to_node);
@@ -246,7 +246,6 @@ let form_parent = () => {
             reader.readAsText(event.target.files[0])
             return data
         }
-        //let file = read_file(event)
         // arr of Family obj
         read_file(event)
     }
@@ -274,10 +273,10 @@ let form_parent = () => {
         <h3>Create parent Todo</h3>
         <label for="name">
             Name: 
-            <input id="parent-name" type="text" name="name" id="" placeholder="E.g. Shopping List">
+            <input id="parent-name" type="text" name="name" placeholder="E.g. Shopping List">
         </label>
-        <button class="btns" id="make-parent" type="submit">Create</button>
-        <button class="btns rm-btns" id="rm-all">Delete All</button>
+        <button id="make-parent" class="btns" type="submit">Create</button>
+        <button id="rm-all" class="btns rm-btns">Delete All</button>
         <div id="backup">
             <button class="btns"><label for="import">Import</label></button>
             <input id="import" type="file" accept=".json"/>
@@ -295,11 +294,11 @@ let form_parent = () => {
             parent_no_opt += `<option value="${i}">${i}</option>`
         }
         parent_nd.innerHTML = `
-            <label class="parent-no" for="parent-no">
-            No. <select class="parent-select" name="parent-no" id="parent-opt-${name}">${parent_no_opt}</select>
+            <label class="parent-no" for="parent-opt-${name}">
+            No. <select id="parent-opt-${name}" class="parent-select" name="parent-no">${parent_no_opt}</select>
             </label>
             <a id="${name}" class="parent-link" href="#" title="${name}">${name}</a>
-            <button  class="btns parent-delete" id="delete${name}" type="submit">Delete</button>
+            <button id="delete${name}" class="btns parent-delete" type="submit">Delete</button>
         `
         to_screen.append(parent_nd)
         document.getElementById(name).addEventListener("click", ()=> Local_load(name))
@@ -348,7 +347,7 @@ let form_parent = () => {
     let make_parent = () => {
         let parent_name = document.getElementById("parent-name").value
         if (parent_name.length < 1) return alert("Length of name cannot be les than 1")
-        //if (parents_arr.includes(parent_name)) return alert("Name already exists: Enter a different name")
+        if(parents_arr.find(parent=> parent.name == parent_name)) return alert("Name already exists: Enter a different name")
         parents_arr.push(new Parent_obj(parent_name, ""))
         parent_render()
         // Reset input contents
