@@ -111,7 +111,7 @@ let form_todo = () => {
             // sort todo objs by step no
             if (a.no == "" && b.no != "") return 1
             if (a.no != "" && b.no == "") return -1
-            
+
             if (a.step_no < b.step_no) return -1
             if (a.step_no > b.step_no) return 1
             return 0
@@ -206,7 +206,7 @@ let form_parent = () => {
         })
 
         // *StackOverflow +
-        let time = Date.now()
+        let time = new Date().toLocaleDateString()
         let filename = `steps_todo_export ${time}.json`;
         const jsonOutput = JSON.stringify(family_arr);
         let element = document.createElement('a');
