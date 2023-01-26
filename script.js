@@ -67,7 +67,7 @@ let form_todo = () => {
                 Completed:
                 <input  id="todo-completed${id}" class="todo-complete-check" type="checkbox" name="todo-competed">
             </label>
-            <button id="rm${id} class="btns todo-remove"">Remove</button>
+            <button id="rm${id}" class="btns todo-remove"">Remove</button>
             <div class="clear"></div>
         `;
         to_screen.append(to_node);
