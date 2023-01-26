@@ -40,27 +40,27 @@ let form_todo = () => {
     `
         
     // Todo Obj Constructor
-    function Todo_obj(id, activity, completed, step_no) {
+    function Todo_obj(id, activity, completed, no) {
         // Constuructor for todo obj
         this.id = id,
         this.activity = activity,
         this.completed = completed,
-        this.step_no = step_no
+        this.no = no
     }
 
     let to_screen = document.getElementById("screen");
-    let show = ({id, activity, completed, step_no}) => {
+    let show = ({id, activity, completed, no}) => {
         // Display a todo obj
         let to_node = document.createElement("div")
         to_node.setAttribute("class", "todo")
-        // Creates Step selector options
-        let step_options = ""
+        // Creates child selector options
+        let child_options = ""
         for (let i = 0; i <= todos_arr.length; i++) {
-            step_options += `<option value="${i}">${i}</option>`
+            child_options += `<option value="${i}">${i}</option>`
         }
         to_node.innerHTML = `
-            <h4 class="td-e todo-step">
-            No. <select class="todo-select" name="step-select" id="step-no-opt${id}">${step_options}</select>
+            <h4 class="td-e todo-child">
+            No. <select class="todo-select" name="child-select" id="child-no-opt${id}">${child_options}</select>
             </h3>
             <p class="td-e todo-activity">Activity: <span>${activity}</span></P>
             <label class="todo-complete" for="todo-Completed">
@@ -76,8 +76,8 @@ let form_todo = () => {
         document.getElementById(`rm${id}`).addEventListener("click", ()=>rm_todo(id))
         document.getElementById(`todo-completed${id}`).checked = completed;
         document.getElementById(`todo-completed${id}`).addEventListener("change", ()=>toggle_completed(id))
-        document.getElementById(`step-no-opt${id}`).value = step_no
-        document.getElementById(`step-no-opt${id}`).addEventListener("change", ()=> update_step(id, document.getElementById(`step-no-opt${id}`).value))
+        document.getElementById(`child-no-opt${id}`).value = no
+        document.getElementById(`child-no-opt${id}`).addEventListener("change", ()=> update_child(id, document.getElementById(`child-no-opt${id}`).value))
     }
     // internal Remove
     let rm_todo = (e_id) => {
@@ -95,25 +95,23 @@ let form_todo = () => {
         })
         return render()
     }
-
-    let update_step = (e_id, step_v) => {
+    let update_child = (e_id, child_v) => {
         //complete todo 
         todos_arr.map((todo)=> {
-            if (todo.id == e_id) todo.step_no = step_v
+            if (todo.id == e_id) todo.no = child_v
             return todo
         })
         return render()
     }
-
     let render = () => {
         // clears and shows familys in screen
         let sort_fn = (a, b) => {
-            // sort todo objs by step no
+            // sort todo objs by child no
             if (a.no == "" && b.no != "") return 1
             if (a.no != "" && b.no == "") return -1
 
-            if (a.step_no < b.step_no) return -1
-            if (a.step_no > b.step_no) return 1
+            if (a.no < b.no) return -1
+            if (a.no > b.no) return 1
             return 0
         }
         todos_arr.sort(sort_fn)
@@ -190,7 +188,7 @@ let form_parent = () => {
     ////////////////////////////////////////////////////////////////////////////////////
     // I/O
     // Export
-    let export_steps = (the_parents) => {
+    let export_childs = (the_parents) => {
         // Export Todos
         function Family_obj(parent, children) {
             // an obj that stores a parent and its children 
@@ -205,9 +203,14 @@ let form_parent = () => {
             family_arr.push(new Family_obj(parent.name, childs))
         })
 
-        // *StackOverflow +
-        let time = new Date().toLocaleDateString()
-        let filename = `steps_todo_export ${time}.json`;
+        // *StackOverflow + Me
+        // Err when using "new Date().toLocaleDateString()" -> mobile not outputing only year to filename
+        // Suspect -> the formating of date breaks the filename string on output
+        let dt = new Date()
+        let date_arr = [dt.getDay(), dt.getMonth() + 1, dt.getFullYear()]
+        let cur_date = `${date_arr[0]}-${date_arr[1]}-${date_arr[2]}`
+        
+        let filename = `Steps_to Export ${cur_date}.json`;
         const jsonOutput = JSON.stringify(family_arr);
         let element = document.createElement('a');
         element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(jsonOutput));
@@ -221,7 +224,7 @@ let form_parent = () => {
         document.body.removeChild(element);
     }
     // Import
-    let import_steps = (event) => {
+    let import_childs = (event) => {
         // *StackOverflow + ***
         let read_file = (event) => {
             let data;
@@ -328,7 +331,7 @@ let form_parent = () => {
     let parent_render = () => {
         // renders parent elements to the screen
         let sort_parents = (a, b) => {
-            // sort todo objs by step no
+            // sort todo objs by child no
             if (a.no == "" && b.no != "") return 1
             if (a.no != "" && b.no == "") return -1
 
@@ -354,8 +357,8 @@ let form_parent = () => {
     recover()
     parent_render()
     document.getElementById("make-parent").addEventListener("click", ()=> make_parent())
-    document.getElementById("export").addEventListener("click", ()=> export_steps(parents_arr))
-    document.getElementById('import').addEventListener('change', (event)=>import_steps(event));
+    document.getElementById("export").addEventListener("click", ()=> export_childs(parents_arr))
+    document.getElementById('import').addEventListener('change', (event)=>import_childs(event));
     
     ////////////////////////////////////////////////////////
     // Remove all todos 

@@ -10,6 +10,10 @@ The site is made with Html, CSS and vanilla Js.
 - It saves and loads the todo data using local storage, where the parent todo acts as a key to access and array of todo object(s)
 ### Cookies -> Theme
 - It has both Light and Dark mode which are saved as cookies
+### IMPORT / EXPORT
+* Parent and Children Todos can be exported to a .json file & the file can be uploaded
+- Export -> Downloads a .json file that has all the todos (Parent No. is not saved)
+- Importing -> A .json file is read and the contents are loaded to Todos.
 
 ## Use
 With the site you can Create parent todos which allow you to add and store children todo within them

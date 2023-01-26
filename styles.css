@@ -98,7 +98,7 @@ header, #entry, #create-parent {
 .todo:hover, .parent-node:hover {
     border: 2px solid var(--color2);
 }
-.todo-step , .todo-activity, .todo-complete {
+.todo-child , .todo-activity, .todo-complete {
     margin: 0.125rem 0.5rem;
     padding: 0.25rem;   
 }
