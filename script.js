@@ -210,7 +210,7 @@ let form_parent = () => {
         let date_arr = [dt.getDay(), dt.getMonth() + 1, dt.getFullYear()]
         let cur_date = `${date_arr[0]}-${date_arr[1]}-${date_arr[2]}`
         
-        let filename = `Steps_to Export ${cur_date}.json`;
+        let filename = `Steps_to Exported ${cur_date}.json`;
         const jsonOutput = JSON.stringify(family_arr);
         let element = document.createElement('a');
         element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(jsonOutput));
