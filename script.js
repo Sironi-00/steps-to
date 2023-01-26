@@ -273,7 +273,8 @@ let form_parent = () => {
         <button class="btns" id="make-parent" type="submit">Create</button>
         <button class="btns rm-btns" id="rm-all">Delete All</button>
         <div id="backup">
-            <input id="import" class="btns" type="file" value="Import" accept=".json"/>
+            <button class="btns"><label for="import">Import</label></button>
+            <input id="import" type="file" accept=".json"/>
             <button id="export" class="btns">Export</button>
         </div>
         </div>

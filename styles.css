@@ -209,6 +209,9 @@ button:hover {
     display: block;
     margin: auto;
 }
+#import {
+    display: none;
+}
 @keyframes blink {
     50% {
         text-shadow: 0 0 18px var(--color2);
