@@ -185,14 +185,19 @@ let parent_Local_load = () => {
 
 let form_parent = () => {
     ////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////
+    // parent page script
+    function Parent_obj(name, no) {
+        this.name = name,
+        this.no = no
+    }
     // I/O
     // Export
     let export_childs = (the_parents) => {
         // Export Todos
-        function Family_obj(parent, children) {
+        function Family_obj(parent, parent_no,children) {
             // an obj that stores a parent and its children 
             this.parent = parent,
+            this.parent_no = parent_no
             this.children = children
         }
 
@@ -200,7 +205,7 @@ let form_parent = () => {
         parent_names = the_parents.forEach(parent=> {
             // Using the arr of parents to access children from localStorage
             let childs = JSON.parse(localStorage.getItem(parent.name)? localStorage.getItem(parent.name): -1)        
-            family_arr.push(new Family_obj(parent.name, childs))
+            family_arr.push(new Family_obj(parent.name, parent.no, childs))
         })
 
         // *StackOverflow + Me
@@ -236,7 +241,8 @@ let form_parent = () => {
                 jsonInput.forEach(family=> {
                     if (family.parent == "Parent-Name") return
                     if (parents_arr.find(parent=> parent.name == family.parent)) return
-                    parents_arr.push(new Parent_obj(family.parent, ""))
+                    if (!(family.parent_no)) family.parent_no = ""
+                    parents_arr.push(new Parent_obj(family.parent, family.parent_no))
                     if (family.children == "-1") family.children = []
                     localStorage.setItem(family.parent, JSON.stringify(family.children));
                 })
@@ -248,11 +254,6 @@ let form_parent = () => {
         }
         // arr of Family obj
         read_file(event)
-    }
-    // parent page script
-    function Parent_obj(name, no) {
-        this.name = name,
-        this.no = no
     }
     parent_Local_load()
     let recover = () => {
