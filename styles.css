@@ -31,7 +31,8 @@ main {
 /* pages + style */
 header {
     text-shadow: 3px 3px 12px var(--color3);
-    top: 0
+    top: 0;
+    box-shadow: 0 2px 2px var(--color3);
 }
 header, #entry, #create-parent {
     /* background: var(--color1); */
