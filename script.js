@@ -23,6 +23,7 @@ let form_todo = () => {
         </div>
         <div id="entry">
         <h3>Add Todo</h3>
+        <div id="entry-hide">
         <label for="activity">
             Activity: 
             <input id="entry-activity"  type="text" name="activity"placeholder="E.g. Learn to Code" required="true">
@@ -35,6 +36,7 @@ let form_todo = () => {
         <div class="rm-block">
         <button id="rm-completed" class="btns rm-btns">Delete Completed</button>
         <button id="rm-not-completed" class="btns rm-btns">Delete Not Completed</button>
+        </div>
         </div>
         </div>
     `
@@ -271,18 +273,21 @@ let form_parent = () => {
         <div id="screen">
         </div>
         <div id="create-parent">
-        <h3>Create parent Todo</h3>
-        <label for="name">
-            Name: 
-            <input id="parent-name" type="text" name="name" placeholder="E.g. Shopping List">
-        </label>
-        <button id="make-parent" class="btns" type="submit">Create</button>
-        <button id="rm-all" class="btns rm-btns">Delete All</button>
-        <div id="backup">
-            <button class="btns"><label for="import">Import</label></button>
-            <input id="import" type="file" accept=".json"/>
-            <button id="export" class="btns">Export</button>
-        </div>
+            <h3>Create parent Todo</h3>
+            <div id="entry-hide">
+            <label class="entry-hide" for="name">
+                Name: 
+                <input id="parent-name" class="entry-hide" type="text" name="name" placeholder="E.g. Shopping List">
+            </label>
+            <button id="make-parent" class="btns entry-hide" type="submit">Create</button>
+            <button id="rm-all" class="btns rm-btns entry-hide">Delete All</button>
+            <div id="backup">
+                <button class="btns entry-hide"><label for="import">Import</label></button>
+                <input id="import" type="file" accept=".json"/>
+                <button id="export" class="btns entry-hide">Export</button>
+            </div>
+            </div>
+            
         </div>
     `
     let to_screen = document.getElementById("screen")
