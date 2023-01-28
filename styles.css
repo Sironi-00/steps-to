@@ -10,7 +10,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    transition: all 0.4s 0.1s;
+    transition: all 0.7s 0s;
 }
 body {
     background: var(--rad-color);
