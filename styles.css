@@ -63,6 +63,7 @@ header, #entry, #create-parent {
     overflow: hidden;
 }
 #entry:hover, #create-parent:hover {
+    transition: all 0.6s;
     --hidor: initial;
 }
 #entry-hide {
