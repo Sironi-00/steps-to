@@ -15,6 +15,12 @@ let Local_load = (foreign_key) => {
     form_todo()
 }
 
+////////////////////////////
+// Entry 
+let entry_toggle = () => {
+    document.getElementById("entry-field").classList.toggle("entry-hidor")
+}
+
 let form_todo = () => {
     // todos page script
     document.getElementById("frame").innerHTML = `
@@ -23,10 +29,10 @@ let form_todo = () => {
         </div>
         <div id="entry">
         <h3>Add Todo</h3>
-        <div id="entry-hide">
+        <div id="entry-field" class="entry-hidor">
         <label for="activity">
             Activity: 
-            <input id="entry-activity"  type="text" name="activity"placeholder="E.g. Learn to Code" required="true">
+            <input id="entry-activity" type="text" name="activity"placeholder="E.g. Learn to Code" required="true">
         </label>
         <label for="competed">
             Completed:
@@ -40,7 +46,6 @@ let form_todo = () => {
         </div>
         </div>
     `
-        
     // Todo Obj Constructor
     function Todo_obj(id, activity, completed, no) {
         // Constuructor for todo obj
@@ -167,6 +172,7 @@ let form_todo = () => {
     }
     rm_completed.addEventListener("click", ()=> remove_completed())
     rm_not_completed.addEventListener("click", ()=> remove_completed(true))
+    document.getElementById("entry").addEventListener("click", entry_toggle)
     render();
 }
 
@@ -274,20 +280,19 @@ let form_parent = () => {
         </div>
         <div id="create-parent">
             <h3>Create parent Todo</h3>
-            <div id="entry-hide">
-            <label class="entry-hide" for="name">
-                Name: 
-                <input id="parent-name" class="entry-hide" type="text" name="name" placeholder="E.g. Shopping List">
-            </label>
-            <button id="make-parent" class="btns entry-hide" type="submit">Create</button>
-            <button id="rm-all" class="btns rm-btns entry-hide">Delete All</button>
-            <div id="backup">
-                <button class="btns entry-hide"><label for="import">Import</label></button>
-                <input id="import" type="file" accept=".json"/>
-                <button id="export" class="btns entry-hide">Export</button>
+            <div id="entry-field" class="entry-hidor">
+                <label for="name">
+                    Name: 
+                    <input id="parent-name" type="text" name="name" placeholder="E.g. Shopping List">
+                </label>
+                <button id="make-parent" class="btns" type="submit">Create</button>
+                <button id="rm-all" class="btns rm-btns">Delete All</button>
+                <div id="backup">
+                    <button class="btns"><label for="import">Import</label></button>
+                    <input id="import" type="file" accept=".json"/>
+                    <button id="export" class="btns">Export</button>
+                </div>
             </div>
-            </div>
-            
         </div>
     `
     let to_screen = document.getElementById("screen")
@@ -361,9 +366,12 @@ let form_parent = () => {
     }
     recover()
     parent_render()
+    
+    // EVENTS
     document.getElementById("make-parent").addEventListener("click", ()=> make_parent())
     document.getElementById("export").addEventListener("click", ()=> export_childs(parents_arr))
     document.getElementById('import').addEventListener('change', (event)=>import_childs(event));
+    document.getElementById("create-parent").addEventListener("click", entry_toggle)
     
     ////////////////////////////////////////////////////////
     // Remove all todos 
@@ -379,11 +387,12 @@ let form_parent = () => {
         parents_arr = []
         parent_render()
     }
-    rm_all.addEventListener("click", ()=> remove_all())
 
+    rm_all.addEventListener("click", ()=> remove_all())
 }
 document.getElementById("return-home").addEventListener("click", ()=> form_parent())
 form_parent()
+
 //////////////////////////////////////////////////////////////
 // Theme
 let theme = () => {

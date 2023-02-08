@@ -4,7 +4,6 @@
     --color3: #000;
 
     --rad-color: radial-gradient(at 50% 50%, var(--color1), var(--color3));
-    --hidor: none !important;
 }
 * {
     margin: 0;
@@ -64,10 +63,9 @@ header, #entry, #create-parent {
 }
 #entry:hover, #create-parent:hover {
     transition: all 0.6s;
-    --hidor: initial;
 }
-#entry-hide {
-    display: var(--hidor);
+.entry-hidor {
+    display: none !important;
 }
 #entry *, #create-parent * {
     margin-bottom: 0.5rem;
