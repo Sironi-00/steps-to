@@ -50,25 +50,33 @@ header, #entry, #create-parent {
     color: var(--color1);
     text-shadow: 0 0 6px var(--color2);
 }
-#entry {
+#entry, #create-parent {
     bottom: 24px;
-    padding: 8px 16px;
     max-width: max-content;
     margin-inline: auto;
-}
-#entry, #create-parent {
     box-shadow: inset 0 0 12px var(--color3);
     border: 4px solid var(--color3);
     overflow: hidden;
 }
 #entry:hover, #create-parent:hover {
-    transition: all 0.6s;
+    scale: 1.02;
+}
+#show-entry {
+    padding: 6px 6px;
+}
+#entry-field {
+    padding: 0px 30px;
 }
 .entry-hidor {
     display: none !important;
 }
+#entry-pops {
+    position: absolute;
+    top: 5px;
+    right: 3px;
+}
 #entry *, #create-parent * {
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.35rem;
 }
 #entry input {
     margin-right: 0.75rem;
@@ -176,12 +184,6 @@ button:hover {
     padding: 0.30rem;
     text-align: center;
     position: relative;
-}
-#create-parent {
-    bottom: 24px;
-    padding: 8px 40px;
-    max-width: max-content;
-    margin-inline: auto;
 }
 .parent-delete, .parent-no {
     position: absolute;

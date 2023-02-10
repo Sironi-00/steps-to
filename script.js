@@ -17,8 +17,13 @@ let Local_load = (foreign_key) => {
 
 ////////////////////////////
 // Entry 
-let entry_toggle = () => {
-    document.getElementById("entry-field").classList.toggle("entry-hidor")
+let entry_toggle = (to_hide=false) => {
+    console.log(to_hide)
+    if (!to_hide) {
+        return document.getElementById("entry-field").classList.remove("entry-hidor")
+    }
+    document.getElementById("entry-field").classList.add("entry-hidor")
+    console.log("***********\n\n")
 }
 
 let form_todo = () => {
@@ -28,21 +33,22 @@ let form_todo = () => {
         <div id="screen">
         </div>
         <div id="entry">
-        <h3>Add Todo</h3>
+        <h3 id="show-entry">Add Todo</h3>
         <div id="entry-field" class="entry-hidor">
-        <label for="activity">
-            Activity: 
-            <input id="entry-activity" type="text" name="activity"placeholder="E.g. Learn to Code" required="true">
-        </label>
-        <label for="competed">
-            Completed:
-            <input id="entry-completed" type="checkbox" name="competed">
-        </label>
-        <button id="entry-add" class="btns" type="submit">Add</button>
-        <div class="rm-block">
-        <button id="rm-completed" class="btns rm-btns">Delete Completed</button>
-        <button id="rm-not-completed" class="btns rm-btns">Delete Not Completed</button>
-        </div>
+            <button id="entry-pops">X</button>
+            <label for="activity">
+                Activity: 
+                <input id="entry-activity" type="text" name="activity"placeholder="E.g. Learn to Code" required="true">
+            </label>
+            <label for="competed">
+                Completed:
+                <input id="entry-completed" type="checkbox" name="competed">
+            </label>
+            <button id="entry-add" class="btns" type="submit">Add</button>
+            <div class="rm-block">
+            <button id="rm-completed" class="btns rm-btns">Delete Completed</button>
+            <button id="rm-not-completed" class="btns rm-btns">Delete Not Completed</button>
+            </div>
         </div>
         </div>
     `
@@ -128,7 +134,6 @@ let form_todo = () => {
     }
 
     // Entry
-    let entry_add = document.getElementById("entry-add")
     let todo_entry = () => {
         // get info from input and create a todo
         let entry_activity = document.getElementById("entry-activity").value
@@ -149,12 +154,10 @@ let form_todo = () => {
         // Reset input contents
         document.getElementById("entry-activity").value = ""
     }
-    entry_add.addEventListener("click", ()=>todo_entry())
+    document.getElementById("entry-add").addEventListener("click", ()=>todo_entry())
 
     //////////////////////////////////////////////////////////////////////
     // Remove todos
-    let rm_completed = document.getElementById("rm-completed")
-    let rm_not_completed = document.getElementById("rm-not-completed")
     let remove_completed = (not=false) => {
         //rm ?completed todos
         let rm_confirm = confirm(`Delete all ${not?"not ":""}completed todos`)
@@ -170,9 +173,10 @@ let form_todo = () => {
         })
         render();
     }
-    rm_completed.addEventListener("click", ()=> remove_completed())
-    rm_not_completed.addEventListener("click", ()=> remove_completed(true))
-    document.getElementById("entry").addEventListener("click", entry_toggle)
+    document.getElementById("rm-completed").addEventListener("click", ()=> remove_completed())
+    document.getElementById("rm-not-completed").addEventListener("click", ()=> remove_completed(true))
+    document.getElementById("show-entry").addEventListener("click", () => entry_toggle())
+    document.getElementById("entry-pops").addEventListener("click", ()=> entry_toggle(true))
     render();
 }
 
@@ -279,8 +283,9 @@ let form_parent = () => {
         <div id="screen">
         </div>
         <div id="create-parent">
-            <h3>Create parent Todo</h3>
+            <h3 id="show-entry">Create parent Todo</h3>
             <div id="entry-field" class="entry-hidor">
+                <button id="entry-pops">X</button>
                 <label for="name">
                     Name: 
                     <input id="parent-name" type="text" name="name" placeholder="E.g. Shopping List">
@@ -371,7 +376,8 @@ let form_parent = () => {
     document.getElementById("make-parent").addEventListener("click", ()=> make_parent())
     document.getElementById("export").addEventListener("click", ()=> export_childs(parents_arr))
     document.getElementById('import').addEventListener('change', (event)=>import_childs(event));
-    document.getElementById("create-parent").addEventListener("click", entry_toggle)
+    document.getElementById("show-entry").addEventListener("click", () => entry_toggle())
+    document.getElementById("entry-pops").addEventListener("click", ()=> entry_toggle(true))
     
     ////////////////////////////////////////////////////////
     // Remove all todos 
