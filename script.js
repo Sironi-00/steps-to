@@ -18,12 +18,10 @@ let Local_load = (foreign_key) => {
 ////////////////////////////
 // Entry 
 let entry_toggle = (to_hide=false) => {
-    console.log(to_hide)
     if (!to_hide) {
         return document.getElementById("entry-field").classList.remove("entry-hidor")
     }
     document.getElementById("entry-field").classList.add("entry-hidor")
-    console.log("***********\n\n")
 }
 
 let form_todo = () => {
