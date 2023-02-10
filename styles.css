@@ -131,6 +131,10 @@ header, #entry, #create-parent {
     overflow: hidden;
     font-weight: bold;
 }
+.todo-complete {
+    grid-column-start: 6;
+    grid-column-end: 8;    
+}
 .todo-remove {
     width: max-content;
     grid-column: -1;
