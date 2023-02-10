@@ -10,6 +10,7 @@
     padding: 0;
     box-sizing: border-box;
     transition: all 0.7s 0s;
+    border-radius: 2px;
 }
 body {
     background: var(--rad-color);
@@ -73,7 +74,7 @@ header, #entry, #create-parent {
 #entry-pops {
     position: absolute;
     top: 5px;
-    right: 3px;
+    right: 0px;
 }
 #entry *, #create-parent * {
     margin-bottom: 0.35rem;

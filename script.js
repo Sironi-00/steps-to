@@ -281,9 +281,9 @@ let form_parent = () => {
         <div id="screen">
         </div>
         <div id="create-parent">
-            <h3 id="show-entry">Create parent Todo</h3>
+            <h3 id="show-entry">Create Parent Todo</h3>
             <div id="entry-field" class="entry-hidor">
-                <button id="entry-pops">X</button>
+                <button id="entry-pops" class="btns">X</button>
                 <label for="name">
                     Name: 
                     <input id="parent-name" type="text" name="name" placeholder="E.g. Shopping List">
