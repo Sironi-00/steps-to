@@ -10,7 +10,7 @@
     padding: 0;
     box-sizing: border-box;
     transition: all 0.7s 0s;
-    border-radius: 2px;
+    border-radius: 0px;
 }
 body {
     background: var(--rad-color);
@@ -243,6 +243,9 @@ button:hover {
     main {
         padding: 0px;
         padding-bottom: 5rem;
+    }
+    #entry-field {
+        padding: 0px 10px;
     }
     #entry label {
         display: block;
